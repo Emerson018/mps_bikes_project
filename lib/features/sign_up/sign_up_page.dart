@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_colors.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
 import 'package:mps_app/common/utils/validator.dart';
+import 'package:mps_app/common/widgets/custom_bottom_sheet.dart';
+import 'package:mps_app/common/widgets/custom_circular_progress_indicator.dart';
 import 'package:mps_app/common/widgets/custom_text_button.dart';
 import 'package:mps_app/common/widgets/custom_text_form_field.dart';
 import 'package:mps_app/common/widgets/password_form_field.dart';
@@ -35,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
         showDialog(
           context: context,
           builder: (context)=> Center(
-            child: CircularProgressIndicator(),
+            child: CustomCircularProgressIndicator(),
           )
         );
       }
@@ -52,17 +54,14 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         );
       }
-      if(_controller.state is SignUpErrorState){
-        showDialog(
-          context: context,
-          builder: (context) => SizedBox(
-            height: 150.0,
-            child: Text("Erro ao logar. Tente Novamente."),
-          )
-        );
+      if (_controller.state is SignUpErrorState) {
+        Navigator.pop(context);
+        customModalBottomSheet(context);
       }
     });
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -159,6 +158,4 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
-
-  
 }
