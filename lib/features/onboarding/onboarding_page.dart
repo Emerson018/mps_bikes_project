@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_colors.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
+import 'package:mps_app/common/constants/routes.dart';
 import 'package:mps_app/common/widgets/custom_text_button.dart';
 import 'package:mps_app/common/widgets/primary_button.dart';
 
@@ -39,7 +40,11 @@ class OnboardingPage extends StatelessWidget {
               ),
               child: PrimaryButton(
                 text: 'Get Started',
-                onPressed: () { 
+                onPressed: () {
+                    Navigator.pushNamed(
+                    context,
+                    NamedRoute.signUp,
+                  );
                 },
               ),
             ),
