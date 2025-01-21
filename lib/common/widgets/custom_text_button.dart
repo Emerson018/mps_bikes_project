@@ -11,7 +11,6 @@ class CustomTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        print('Log in button pressed');
       },
       child: Text(
         ' Log in',

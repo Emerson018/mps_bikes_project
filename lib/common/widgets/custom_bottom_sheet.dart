@@ -15,7 +15,7 @@ Future<void> customModalBottomSheet(BuildContext context) {
         builder: (BuildContext context) {
           return Container(
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: Color(0xFFFFFFFF),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(38.0),
                 topRight: Radius.circular(38.0),

@@ -10,6 +10,7 @@ import 'package:mps_app/common/widgets/password_form_field.dart';
 import 'package:mps_app/common/widgets/primary_button.dart';
 import 'package:mps_app/features/sign_up/sign_up_controller.dart';
 import 'package:mps_app/features/sign_up/sign_up_state.dart';
+import 'package:mps_app/services/mock_auth_service.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -20,11 +21,15 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _controller = SignUpController();
+  final _controller = SignUpController(MockAuthService());
 
   @override
   void dispose(){
+    _nameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -55,8 +60,14 @@ class _SignUpPageState extends State<SignUpPage> {
         );
       }
       if (_controller.state is SignUpErrorState) {
+        final error = _controller.state as SignUpErrorState;
         Navigator.pop(context);
-        customModalBottomSheet(context);
+        customModalBottomSheet(
+          context,
+          //content: error.message,
+          //buttonText: "Tentar novamente.",
+          //No video 20 aos 25 min ele mostra essa parte, mas n ta implementada
+        );
       }
     });
   }
@@ -93,6 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Column(
               children: [
                 CustomTextFormField(
+                  controller: _nameController,
                   labelText: "Nome",
                   hintText: "Elon Musk",
 
@@ -100,6 +112,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
 
                 CustomTextFormField(
+                  controller: _emailController,
                   labelText: "your email",
                   hintText: "john@email.com",
                   validator: Validator.validateEmail,
@@ -134,9 +147,12 @@ class _SignUpPageState extends State<SignUpPage> {
               onPressed: () {
                 final valid = _formKey.currentState != null && _formKey.currentState!.validate();
                 if(valid){
-                  _controller.doSignUp();
+                  _controller.signUp(
+                    name: _nameController.text,
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  );
                 }else {
-                  print("erro ao logar!");
                 }
               },
             ),

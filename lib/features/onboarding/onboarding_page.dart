@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_colors.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
@@ -41,7 +40,6 @@ class OnboardingPage extends StatelessWidget {
               child: PrimaryButton(
                 text: 'Get Started',
                 onPressed: () { 
-                  print('PrimaryButton pressed');
                 },
               ),
             ),

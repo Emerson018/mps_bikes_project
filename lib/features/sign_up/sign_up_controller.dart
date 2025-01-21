@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mps_app/features/sign_up/sign_up_state.dart';
+import 'package:mps_app/services/auth_service.dart';
 
 class SignUpController extends ChangeNotifier {
+  final AuthService _service;
+  SignUpController(this._service);
+
   SignUpState _state = SignUpInitialState();
 
   SignUpState get state => _state;
@@ -11,13 +15,24 @@ class SignUpController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> doSignUp() async {
+  Future<void> signUp({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
     _changeState(SignUpLoadingState());
 
-    await Future.delayed(const Duration(seconds: 2));
-    print("Usuário logado.");
+    try {
+      await _service.signUp(
+        name: name,
+        email: email,
+        password: password,
+      );
 
-    _changeState(SignUpSuccessState());
-    return true;
+      _changeState(SignUpSuccessState());
+    } catch (e) {
+    _changeState(SignUpErrorState(e.toString()));
+    }
+    
   }
 }
