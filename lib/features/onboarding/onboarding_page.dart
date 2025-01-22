@@ -41,7 +41,7 @@ class OnboardingPage extends StatelessWidget {
               child: PrimaryButton(
                 text: 'Get Started',
                 onPressed: () {
-                    Navigator.pushNamed(
+                    Navigator.popAndPushNamed(
                     context,
                     NamedRoute.signUp,
                   );
@@ -57,7 +57,7 @@ class OnboardingPage extends StatelessWidget {
                     color: AppColors.grey,
                   ),
                 ),
-                CustomTextButton(),
+                CustomTextButtonLogIn(),
               ],
             ),
             const SizedBox(height: 14.0),
