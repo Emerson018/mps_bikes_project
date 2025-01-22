@@ -10,7 +10,7 @@ import 'package:mps_app/common/widgets/password_form_field.dart';
 import 'package:mps_app/common/widgets/primary_button.dart';
 import 'package:mps_app/features/sign_in/sign_in_controller.dart';
 import 'package:mps_app/features/sign_in/sign_in_state.dart';
-import 'package:mps_app/services/mock_auth_service.dart';
+import 'package:mps_app/locator.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -23,7 +23,7 @@ class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _controller = SignInController(MockAuthService());
+  final _controller = locator.get<SignInController>();
 
   @override
   void dispose(){
