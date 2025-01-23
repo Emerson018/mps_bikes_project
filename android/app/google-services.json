@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "934958716559",
+    "project_id": "mps-bikes",
+    "storage_bucket": "mps-bikes.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934958716559:android:19212f0d1fb664575042fa",
+        "android_client_info": {
+          "package_name": "dev.sayrix.financial.mps_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuAfvm2v7IZi18apCfU4qC1oqbAJIjqj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
