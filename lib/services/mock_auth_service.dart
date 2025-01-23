@@ -1,6 +1,8 @@
 import 'package:mps_app/common/models/user_model.dart';
 import 'package:mps_app/services/auth_service.dart';
 
+//PODE DELETAR ESSE APP
+
 class MockAuthService implements AuthService{
   @override
   Future<UserModel> signIn({
@@ -14,7 +16,7 @@ class MockAuthService implements AuthService{
         throw Exception();
       }
       return UserModel(
-        id: email.hashCode,
+        id: email.hashCode.toString(),
         email: email
       );
     } catch (e) {
@@ -37,7 +39,7 @@ class MockAuthService implements AuthService{
         throw Exception();
       }
       return UserModel(
-        id: email.hashCode,
+        id: email.hashCode.toString(),
         name: name,
         email: email
       );
