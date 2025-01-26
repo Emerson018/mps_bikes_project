@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:mps_app/features/sign_in/sign_in_state.dart';
 import 'package:mps_app/services/auth_service.dart';
+import 'package:mps_app/services/secure_storage.dart';
 
 class SignInController extends ChangeNotifier {
   final AuthService _service;
@@ -21,15 +22,24 @@ class SignInController extends ChangeNotifier {
     required String email,
     required String password,
   }) async {
+    const securestorage = Securestorage();
+
     _changeState(SignInStateLoading());
 
     try {
-      await _service.signIn(
+      final user = await _service.signIn(
         email: email,
         password: password,
       );
 
-      _changeState(SignInStateSuccess());
+      if(user.id!=null){
+        await securestorage.write(key: "CURRENT_USER", value: user.toJson());
+
+        _changeState(SignInStateSuccess());
+      }else {
+        throw Exception();
+      }
+
     } catch (e) {
     _changeState(SignInStateError(e.toString()));
     }
