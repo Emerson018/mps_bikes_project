@@ -5,7 +5,9 @@ import 'package:mps_app/services/secure_storage.dart';
 
 class SignUpController extends ChangeNotifier {
   final AuthService _service;
-  SignUpController(this._service);
+  final Securestorage _securestorage;
+
+  SignUpController(this._service, this._securestorage);
 
   SignUpState _state = SignUpInitialState();
 
@@ -21,7 +23,6 @@ class SignUpController extends ChangeNotifier {
     required String email,
     required String password,
   }) async {
-    final secureStorage = Securestorage();
     _changeState(SignUpLoadingState());
 
     try {
@@ -31,7 +32,7 @@ class SignUpController extends ChangeNotifier {
         password: password,
       );
       if(user.id != null) {
-        await secureStorage.write(
+        await _securestorage.write(
           key: "CURRENT_USER",
           value: user.toJson()
         );

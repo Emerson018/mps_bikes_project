@@ -18,5 +18,6 @@ void setupDependences() {
     () => SignInController(locator.get<AuthService>()));
 
   locator.registerFactory<SignUpController>(
-    () => SignUpController(locator.get<AuthService>()));
+    ()=> SignUpController(locator.get<AuthService>(), 
+    const Securestorage()));
 }
