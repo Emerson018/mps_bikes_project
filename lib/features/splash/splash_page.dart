@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_colors.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
 import 'package:mps_app/common/constants/routes.dart';
+import 'package:mps_app/common/extensions/sizes.dart';
 import 'package:mps_app/common/widgets/custom_circular_progress_indicator.dart';
 import 'package:mps_app/features/splash/splash_controller.dart';
 import 'package:mps_app/features/splash/splash_state.dart';
@@ -20,6 +21,9 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => Sizes.init(context));
+
     _splashController.isUserLogged();
     _splashController.addListener(() {
       if(_splashController.state is SplashStateSuccess){
@@ -32,7 +36,6 @@ class _SplashPageState extends State<SplashPage> {
           context,
           NamedRoute.initial
         );
-        
       }
     });
   }

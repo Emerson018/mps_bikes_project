@@ -11,6 +11,9 @@ class AppColors {
   static const Color darkGrey = Color(0xFF444444);
   static const Color grey = Color(0xFF666666);
 
+  static const Color red = Color(0xB9EB0A0A);
+  static const Color green = Color(0xCA09C54B);
+
   static const List<Color> greyGradient = [
     Color(0xFFF0F0F0),
     Color(0xFF808080),
