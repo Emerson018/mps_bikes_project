@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_colors.dart';
 
 class CustomCircularProgressIndicator extends StatelessWidget {
+  final Color? color;
   const CustomCircularProgressIndicator({
-    super.key,
-  });
+    Key? key,
+    this.color,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CircularProgressIndicator(
-      color: AppColors.iceWhite);
+    return Center(
+      child: CircularProgressIndicator(
+        color: color ??  AppColors.iceWhite,
+      ),
+    );
   }
 }
