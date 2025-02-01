@@ -1,1 +1,37 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"mps-bikes","appId":"1:934958716559:android:19212f0d1fb664575042fa","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"mps-bikes","configurations":{"android":"1:934958716559:android:19212f0d1fb664575042fa","ios":"1:934958716559:ios:641170a0170202a05042fa","web":"1:934958716559:web:73d335f637b546ce5042fa","windows":"1:934958716559:web:9be92f084a1a78a85042fa"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "mps-bikes",
+          "appId": "1:934958716559:android:19212f0d1fb664575042fa",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "mps-bikes",
+          "configurations": {
+            "android": "1:934958716559:android:19212f0d1fb664575042fa",
+            "ios": "1:934958716559:ios:641170a0170202a05042fa",
+            "web": "1:934958716559:web:73d335f637b546ce5042fa",
+            "windows": "1:934958716559:web:9be92f084a1a78a85042fa"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
+}
