@@ -5,12 +5,12 @@ const admin = require("firebase-admin");
 //necessário fazer o npm install --save graphql-request
 const request = require("graphql-request");
 
-admin.initializeApp(functions.config().firebase);
+admin.initializeApp()
 
-const client = new request.GraphQLClient(process.env.HASURA_ENDPOINT, {
+const client = new request.GraphQLClient('https://one-roughy-50.hasura.app/v1/graphql', {
     headers: {
         "content-type": "application/json",
-        "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET
+        "x-hasura-admin-secret": "c71VmgZSMBFM7Z9jB1eiwmN0B85ce67IwEz0XENZRn1MVYHzJACvhJ3iqU1UcACw"
     }
 })
 
