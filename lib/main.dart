@@ -24,3 +24,4 @@ void main() async {
 //CONTA DE TESTE
 // EMAIL: emersonlima.018@hotmail.com
 // SENHA: MPs!bikes018
+//testar otruso erros: https://chatgpt.com/c/679fd23c-e9bc-8009-8b04-33d1948521a8

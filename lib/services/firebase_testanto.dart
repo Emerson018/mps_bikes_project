@@ -14,70 +14,77 @@ class FirebaseAuthService implements AuthService {
     required String password,
   }) async {
     try {
-     final result = await _auth.signInWithEmailAndPassword(
-      email: email,
-      password: password
-    );
-    if(result.user != null) {
-      return UserModel(
-        name: result.user!.displayName,
-        email: result.user!.email,
-        id: result.user!.uid,
-         );
-    } else {
-      throw Exception();
+      final result = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (result.user != null) {
+        // Log do token JWT para Hasura
+        final token = await result.user!.getIdTokenResult(true);
+        log('Token JWT: ${token.token}');
+
+        return UserModel(
+          name: result.user!.displayName,
+          email: result.user!.email,
+          id: result.user!.uid,
+        );
+      } else {
+        throw Exception('Usuário não encontrado após o login.');
+      }
+    } on FirebaseAuthException catch (e) {
+      log('Erro no login: ${e.message}');
+      throw e.message ?? "Erro desconhecido no login.";
+    } catch (e) {
+      log('Erro inesperado no login: $e');
+      rethrow;
     }
-   } on FirebaseAuthException catch (e) {
-    throw e.message ?? "null";
-   } catch (e) {
-    rethrow;
-   }
   }
 
   @override
   Future<UserModel> signUp({
     String? name,
     required String email,
-    required String password
-  }) async{
-   try {
-    await _functions.httpsCallable('registerUser').call({
-            "email": email,
-            "password": password,
-            "displayName": name
-        });
-
-    final result = await _auth.signInWithEmailAndPassword(
+    required String password,
+  }) async {
+    try {
+      // 1. Chamar a Cloud Function para registro
+      final result = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password
     );
 
-    if(result.user != null) {
-      log(await _auth.currentUser?.getIdToken(true) ?? 'nulo');
+      if (result.user != null) {
+        // 4. Atualizar token para Hasura
+        final token = await result.user!.getIdTokenResult(true);
+        log('Token JWT: ${token.token}');
 
-      await result.user!.updateDisplayName(name);
-      return UserModel(
-        name: _auth.currentUser?.displayName,
-        email: _auth.currentUser?.email,
-        id: _auth.currentUser?.uid,
-         );
-    } else {
-      throw Exception();
+        return UserModel(
+          name: result.user!.displayName,
+          email: result.user!.email,
+          id: result.user!.uid,
+        );
+      } else {
+        throw Exception('Usuário não encontrado após o registro.');
+      }
+    } on FirebaseAuthException catch (e) {
+      log('Erro no Firebase Auth: ${e.message}');
+      throw e.message ?? "Erro desconhecido no Firebase Auth.";
+    } on FirebaseFunctionsException catch (e) {
+      log('Erro na Cloud Function: ${e.message}');
+      throw e.message ?? "Erro desconhecido na Cloud Function.";
+    } catch (e) {
+      log('Erro inesperado no registro: $e');
+      rethrow;
     }
-   } on FirebaseAuthException catch (e) {
-    throw e.message ?? "null";
-   } on FirebaseFunctionsException catch (e) { 
-    throw e.message ?? "null";
-   } catch (e) {
-    rethrow;
-   }
   }
-  
+
   @override
   Future<void> signOut() async {
     try {
       await _auth.signOut();
     } catch (e) {
+      log('Erro ao fazer logout: $e');
       rethrow;
     }
   }

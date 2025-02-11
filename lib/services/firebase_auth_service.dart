@@ -48,22 +48,7 @@ class FirebaseAuthService implements AuthService {
     required String password,
   }) async {
     try {
-      // 1. Chamar a Cloud Function para registro
-      final response = await _functions
-          .httpsCallable('registerUser')
-          .call({
-            "email": email,
-            "password": password,
-            "displayName": name,
-          });
-
-      // 2. Verificar a resposta da Cloud Function
-      if (response.data['success'] != true) {
-        throw Exception(response.data['error'] ?? 'Erro ao registrar usuário.');
-      }
-
-      // 3. Fazer login com as credenciais
-      final result = await _auth.signInWithEmailAndPassword(
+      final result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
