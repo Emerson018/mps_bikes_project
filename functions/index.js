@@ -128,7 +128,7 @@ exports.updateUserName = functions.https.onCall(async (data) => {
         })
         return data;
     } catch (error) {
-        console.error('Error processing update user name:', error);
-        throw new functions.https.HttpsError('internal', 'Error processing user name.');
+        console.error('Error:', error);
+        throw new functions.https.HttpsError('internal', 'Update failed');
     }
 });
