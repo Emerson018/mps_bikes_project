@@ -53,6 +53,18 @@ class FirebaseAuthService implements AuthService {
         password: password,
       );
 
+        //await _functions.httpsCallable('registerUser').call({
+        //    "email": email,
+        //    "password": password,
+
+        //});
+
+    //final result = await _auth.signInWithEmailAndPassword(
+    //  email: email,
+    //  password: password
+    //);
+
+
       if (result.user != null) {
         // 4. Atualizar token para Hasura
         final token = await result.user!.getIdTokenResult(true);
