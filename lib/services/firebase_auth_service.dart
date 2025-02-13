@@ -3,6 +3,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mps_app/common/models/user_model.dart';
 import 'package:mps_app/services/auth_service.dart';
+import 'package:mps_app/services/firebase_database.dart';
 
 class FirebaseAuthService implements AuthService {
   final _auth = FirebaseAuth.instance;
@@ -52,6 +53,8 @@ class FirebaseAuthService implements AuthService {
         email: email,
         password: password,
       );
+
+      FirestoreDataSource().createUser(email);
 
         //await _functions.httpsCallable('registerUser').call({
         //    "email": email,
