@@ -24,7 +24,7 @@ void setupDependences() {
     ()=> SignUpController(locator.get<AuthService>(), 
     const Securestorage()));
 
-  locator.registerFactory<TransactionRepository>(
+  locator.registerLazySingleton<TransactionRepository>(
     () => TransactionRepositoryImpl());
 
   locator.registerLazySingleton<HomeController>(

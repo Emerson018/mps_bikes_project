@@ -21,7 +21,13 @@ void main() async {
   setupDependences();
   runApp(const App());
 }
-//CONTA DE TESTE
+//CONTA DE TESTE NO FIREBASE:
 // EMAIL: emersonlima.018@hotmail.com
 // SENHA: MPs!bikes018
-//testar otruso erros: https://chatgpt.com/c/679fd23c-e9bc-8009-8b04-33d1948521a8
+
+//CONTAA DE TESTE FIREBASE E FIRESTORE:
+//EMAIL: firestoreteste@gmail.com
+//SENHA: Asdfg@2345
+
+//algumas refatoraçoes foram feitas aos 2:00 desse video,
+//mas eu não implementei: https://www.youtube.com/watch?v=aKFVTsUyevM&list=PLtlg0Apoubs_xVS8QxIX51zl0iucEcKyK&index=37

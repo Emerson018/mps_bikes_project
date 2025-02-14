@@ -1,7 +1,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mps_app/common/models/transaction_model.dart';
 import 'package:mps_app/features/home/homepage.dart';
 import 'package:mps_app/features/wallets/wallet_page.dart';
+import 'package:mps_app/locator.dart';
+import 'package:mps_app/repositories/transaction_repository.dart';
 import '../../common/constants/app_colors.dart';
 import '../../common/widgets/custom_bottom_app_bar.dart';
 import '../profile/profile_page.dart';
@@ -36,7 +39,14 @@ class _HomePageViewState extends State<HomePageView> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.greenlightOne,
-        onPressed: () {},
+        onPressed: () /* TODO começo do hard coded */async{
+           final transaction = TransactionModel(
+          title: 'Compra Online',
+          value: -120.50,
+          date: DateTime.now().millisecondsSinceEpoch,
+        );
+        await locator.get<TransactionRepository>().addTransaction(transaction);
+        }, /* final do hard coded */
         shape: const CircleBorder(),
         child: const Icon(Icons.add),
       ),
