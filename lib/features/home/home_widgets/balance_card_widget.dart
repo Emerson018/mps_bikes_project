@@ -36,56 +36,50 @@ class BalanceCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Total Balance',
-                      textScaleFactor: textScaleFactor,
-                      style: AppTextStyles.mediumText18
-                          .apply(color: AppColors.white),
-                    ),
-                    ConstrainedBox(
-                      constraints: BoxConstraints.tightFor(width: 250.0.w),
-                      child: Text(
-                        '\$${totalAmount.toStringAsFixed(2)}',
-                        textScaleFactor: textScaleFactor,
-                        style: AppTextStyles.mediumText18
-                            .apply(color: AppColors.white),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    )
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () => log('options'),
-                  child: PopupMenuButton(
-                    padding: EdgeInsets.zero,
-                    child: const Icon(
-                      Icons.more_horiz,
-                      color: AppColors.white,
-                    ),
-                    itemBuilder: (context) => [
-                      const PopupMenuItem(
-                        height: 24.0,
-                        child: Text("Item 1"),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    Expanded( // Garante que o texto não ultrapasse a tela
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Total Balance',
+            textScaleFactor: textScaleFactor,
+            style: AppTextStyles.mediumText18.apply(color: AppColors.white),
+          ),
+          Text(
+            '\$${totalAmount.toStringAsFixed(2)}',
+            textScaleFactor: textScaleFactor,
+            style: AppTextStyles.mediumText18.apply(color: AppColors.white),
+            overflow: TextOverflow.ellipsis, // Evita que o texto estoure a tela
+          ),
+        ],
+      ),
+    ),
+    PopupMenuButton( // Não ocupa espaço extra
+      padding: EdgeInsets.zero,
+      child: const Icon(Icons.more_horiz, color: AppColors.white),
+      itemBuilder: (context) => [
+        const PopupMenuItem(
+          height: 24.0,
+          child: Text("Item 1"),
+        ),
+      ],
+    ),
+  ],
+),
+
             SizedBox(height: 36.h),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TransactionValueWidget(amount: incomeAmount),
-                TransactionValueWidget(amount: outcomeAmount),
-              ],
-            ),
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+    Expanded(child: TransactionValueWidget(amount: incomeAmount)),
+    Expanded(child: TransactionValueWidget(amount: outcomeAmount)),
+  ],
+),
+
+
           ],
         ),
       ),
@@ -121,27 +115,28 @@ class TransactionValueWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 4.0),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              amount.isNegative ? 'Expense' : 'Income',
-              textScaleFactor: textScaleFactor,
-              style:
-                  AppTextStyles.mediumText18.apply(color: AppColors.white),
-            ),
-            ConstrainedBox(
-              constraints: BoxConstraints.tightFor(width: 100.0.w),
-              child: Text(
+        Flexible( // Adicionando flexibilidade
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            amount.isNegative ? 'Expense' : 'Income',
+            textScaleFactor: textScaleFactor,
+            style: AppTextStyles.mediumText18.apply(color: AppColors.white),
+          ),
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 100.0.w), // Limitar largura
+            child: Text(
                 '\$${amount.toStringAsFixed(2)}',
                 textScaleFactor: textScaleFactor,
-                style: AppTextStyles.mediumText18.apply(color: AppColors.white),
+                style: AppTextStyles.smallText.apply(color: AppColors.white),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
-        )
+        ),
+      ),
       ],
     );
   }
