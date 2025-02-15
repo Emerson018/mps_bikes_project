@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_colors.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
 import 'package:mps_app/common/extensions/sizes.dart';
-import 'package:mps_app/features/home/greetings_widget.dart';
+import 'package:mps_app/features/home/home_widgets/greetings_widget.dart';
 import 'package:mps_app/common/widgets/notification_widget.dart';
 
 class AppHeader extends StatefulWidget {
