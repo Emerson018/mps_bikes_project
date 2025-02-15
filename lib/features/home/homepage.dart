@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
+import 'package:mps_app/common/widgets/app_header.dart';
 import 'package:mps_app/common/widgets/custom_circular_progress_indicator.dart';
 import 'package:mps_app/features/home/home_controller.dart';
 import 'package:mps_app/features/home/home_state.dart';
@@ -35,80 +36,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: AppColors.greenGradient,
-                ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.elliptical(500, 30),
-                  bottomRight: Radius.elliptical(500, 30),
-                ),
-              ),
-              height: 287.h,
-            ),
-          ),
-          Positioned(
-              left: 24.0,
-              right: 24.0,
-              top: 74.h,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Good afternoon,',
-                        textScaleFactor: textScaleFactor,
-                        style: AppTextStyles.smallText
-                            .apply(color: AppColors.white),
-                      ),
-                      Text(
-                        'Enjelin Morgeana',
-                        textScaleFactor: textScaleFactor,
-                        style: AppTextStyles.mediumText18
-                            .apply(color: AppColors.white),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 8.h,
-                      horizontal: 8.w,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(4.0)),
-                      color: AppColors.white.withOpacity(0.06),
-                    ),
-                    child: Stack(
-                      alignment: const AlignmentDirectional(0.5, -0.5),
-                      children: [
-                        const Icon(
-                          Icons.notifications_none_outlined,
-                          color: AppColors.white,
-                        ),
-                        Container(
-                          width: 6.w,
-                          height: 6.w,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFD4A310),
-                            borderRadius: BorderRadius.circular(
-                              4.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )),
+          AppHeader(),
           Positioned(
             left: 24.w,
             right: 24.w,
