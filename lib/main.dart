@@ -31,3 +31,5 @@ void main() async {
 
 //algumas refatoraçoes foram feitas aos 2:00 desse video,
 //mas eu não implementei: https://www.youtube.com/watch?v=aKFVTsUyevM&list=PLtlg0Apoubs_xVS8QxIX51zl0iucEcKyK&index=37
+
+//perguntar em como nao usar o hardcoded nos valores da homepage.dart

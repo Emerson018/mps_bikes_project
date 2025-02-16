@@ -39,11 +39,16 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           AppHeader(),
-          BalanceCard(
-            totalAmount: 40000.0,
-            incomeAmount: 24000.0,
-            outcomeAmount: -1200.0,
-          ),
+          AnimatedBuilder(
+  animation: controller,
+  builder: (context, _) {
+    return BalanceCard(
+      totalAmount: controller.totalAmount,
+      incomeAmount: controller.incomeAmount,
+      outcomeAmount: controller.outcomeAmount,
+    );
+  },
+),
           Positioned(
             top: 397.h,
             left: 0,
@@ -58,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                     children: const [
                       Text(
                         'Transaction History',
-                        style: AppTextStyles.mediumText18, //PAREI AQUI, FALTA OS DE CIMA 
+                        style: AppTextStyles.mediumText18,
                       ),
                       Text(
                         'See all',

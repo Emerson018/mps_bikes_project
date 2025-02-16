@@ -22,8 +22,8 @@ class TransactionListView extends StatelessWidget {
         final item = controller.transactions[index];
     
         final color = item.value.isNegative
-          ? AppColors.green
-          : AppColors.red;
+          ? AppColors.red
+          : AppColors.green;
         final value =
             "\$ ${item.value.toStringAsFixed(2)}";
         return ListTile(

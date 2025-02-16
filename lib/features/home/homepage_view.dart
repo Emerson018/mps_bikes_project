@@ -42,7 +42,7 @@ class _HomePageViewState extends State<HomePageView> {
         onPressed: () /* TODO começo do hard coded */async{
            final transaction = TransactionModel(
           title: 'Compra Online',
-          value: -120.50,
+          value: 2850.50,
           date: DateTime.now().millisecondsSinceEpoch,
         );
         await locator.get<TransactionRepository>().addTransaction(transaction);
