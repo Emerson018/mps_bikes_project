@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_colors.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
 import 'package:mps_app/features/home/home_controller.dart';
+import 'package:mps_app/locator.dart';
 
 class TransactionListView extends StatelessWidget {
   const TransactionListView({
