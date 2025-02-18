@@ -32,4 +32,5 @@ void main() async {
 //algumas refatoraçoes foram feitas aos 2:00 desse video,
 //mas eu não implementei: https://www.youtube.com/watch?v=aKFVTsUyevM&list=PLtlg0Apoubs_xVS8QxIX51zl0iucEcKyK&index=37
 
-//perguntar em como nao usar o hardcoded nos valores da homepage.dart
+// não esquecer que controller ta com essa edição do chatgpt:
+//https://chatgpt.com/c/67b2985a-8f90-8009-b956-d2ab67e9a34a

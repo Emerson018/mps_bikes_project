@@ -15,6 +15,7 @@ class CustomTextFormField extends StatefulWidget {
   final bool? obscureText;
   final String? Function(String?)? validator;
   final String? helperText;
+  final GestureTapCallback? onTap;
 
   const CustomTextFormField({
     super.key,
@@ -29,7 +30,7 @@ class CustomTextFormField extends StatefulWidget {
     this.suffixIcon,
     this.obscureText,
     this.validator,
-    this.helperText,
+    this.helperText, this.onTap,
   });
 
   @override

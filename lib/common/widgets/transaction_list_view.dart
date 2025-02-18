@@ -28,6 +28,17 @@ class TransactionListView extends StatelessWidget {
         final value =
             "\$ ${item.value.toStringAsFixed(2)}";
         return ListTile(
+          onTap: () async {
+            final result = await Navigator.pushNamed(
+              context,
+              '/transaction',
+              arguments: item,
+            );
+            if (result != null) {
+              locator.get<HomeController>().getAllTransactions();
+              //locator.get<BalanceCardWidgetController>().getBalances();
+            }
+          },
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 8.0),
           leading: Container(
@@ -42,7 +53,7 @@ class TransactionListView extends StatelessWidget {
             ),
           ),
           title: Text(
-            item.title,
+            item.description,
             style: AppTextStyles.mediumText18,
           ),
           subtitle: Text(

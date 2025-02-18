@@ -9,6 +9,7 @@ import '../../common/constants/app_colors.dart';
 import '../../common/widgets/custom_bottom_app_bar.dart';
 import '../profile/profile_page.dart';
 import '../stats/stats_page.dart';
+import '../../common/constants/routes.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({super.key});
@@ -39,14 +40,16 @@ class _HomePageViewState extends State<HomePageView> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.greenlightOne,
-        onPressed: () /* TODO começo do hard coded */async{
+        onPressed: () {
+    Navigator.pushNamed(context, NamedRoute.transaction);
+  },/* TODO começo do hard coded */ /*async{
            final transaction = TransactionModel(
-          title: 'Compra Online',
+          description: 'Compra Online',
           value: 2850.50,
           date: DateTime.now().millisecondsSinceEpoch,
         );
         await locator.get<TransactionRepository>().addTransaction(transaction);
-        }, /* final do hard coded */
+        }, /* final do hard coded */ */
         shape: const CircleBorder(),
         child: const Icon(Icons.add),
       ),
