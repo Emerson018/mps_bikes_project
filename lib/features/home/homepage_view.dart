@@ -1,10 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:mps_app/common/models/transaction_model.dart';
 import 'package:mps_app/features/home/homepage.dart';
 import 'package:mps_app/features/wallets/wallet_page.dart';
-import 'package:mps_app/locator.dart';
-import 'package:mps_app/repositories/transaction_repository.dart';
 import '../../common/constants/app_colors.dart';
 import '../../common/widgets/custom_bottom_app_bar.dart';
 import '../profile/profile_page.dart';
@@ -42,7 +39,7 @@ class _HomePageViewState extends State<HomePageView> {
         backgroundColor: AppColors.greenlightOne,
         onPressed: () {
     Navigator.pushNamed(context, NamedRoute.transaction);
-  },/* TODO começo do hard coded */ /*async{
+  },/* começo do hard coded */ /*async{
            final transaction = TransactionModel(
           description: 'Compra Online',
           value: 2850.50,
