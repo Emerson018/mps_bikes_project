@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
@@ -211,7 +212,7 @@ class _TransactionPageState extends State<TransactionPage>
                       CustomTextFormField(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         controller: _categoryController,
-                        //readOnly: true,
+                        readOnly: true,
                         labelText: "Category",
                         hintText: "Select a category",
                         validator: (value) {
@@ -244,7 +245,7 @@ class _TransactionPageState extends State<TransactionPage>
                       CustomTextFormField(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         controller: _dateController,
-                        //readOnly: true,
+                        readOnly: true,
                         labelText: "Date",
                         hintText: "Select a date",
                         validator: (value) {
@@ -254,6 +255,7 @@ class _TransactionPageState extends State<TransactionPage>
                           return null;
                         },
                         onTap: () async {
+                          print('object');
                           _date = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
@@ -277,27 +279,56 @@ class _TransactionPageState extends State<TransactionPage>
                         child: PrimaryButton(
                           text: widget.transaction != null ? 'Save' : 'Add',
                           onPressed: () async {
-                            FocusScope.of(context).unfocus();
-                            if (_formKey.currentState!.validate()) {
-                              final newValue = double.parse(_amountController
-                                  .text
-                                  .replaceAll('R\$', '')
-                                  .replaceAll('.', '')
-                                  .replaceAll(',', '.'));
-                              /*final newTransaction = TransactionModel(
-                                category: _categoryController.text,
-                                description: _descriptionController.text,
-                                value: _tabController.index == 1
-                                    ? newValue * -1
-                                    : newValue,
-                                date: _date != null
-                                    ? _date!.millisecondsSinceEpoch
-                                    : DateTime.now().millisecondsSinceEpoch,
-                                status: value,
-                                id: widget.transaction?.id,
-                              );*/
-                            }
-                          },
+  FocusScope.of(context).unfocus();
+  if (_formKey.currentState!.validate()) {
+    final newValue = double.parse(_amountController
+        .text
+        .replaceAll('R\$', '')
+        .replaceAll('.', '')
+        .replaceAll(',', '.'));
+
+    final newTransaction = TransactionModel(
+      category: _categoryController.text,
+      description: _descriptionController.text,
+      value: _tabController.index == 1 ? newValue * -1 : newValue,
+      date: _date != null
+          ? _date!.millisecondsSinceEpoch
+          : DateTime.now().millisecondsSinceEpoch,
+      status: value,
+      id: widget.transaction?.id,  // Se widget.transaction for nulo, id será nulo.
+    );
+
+    log('Nova transação gerada: ${newTransaction.toMap()}');
+
+    if (widget.transaction == newTransaction) {
+      log('Nenhuma alteração detectada, fechando página');
+      Navigator.pop(context);
+      return;
+    }
+
+    // Se estiver editando, o widget.transaction precisa ter um id válido.
+    if (widget.transaction != null) {
+      if (widget.transaction!.id == null) {
+        log('Erro: A transação original não possui ID. Verifique se o objeto foi carregado corretamente.');
+      }
+      log('Chamando updateTransaction para ID: ${newTransaction.id}');
+      await _transactionController.updateTransaction(newTransaction);
+      if (mounted) {
+        log('Fechando página após update');
+        Navigator.pop(context, true);
+      }
+    } else {
+      log('Chamando addTransaction para nova transação');
+      await _transactionController.addTransaction(newTransaction);
+      if (mounted) {
+        log('Fechando página após adicionar nova transação');
+        Navigator.pop(context, true);
+      }
+    }
+  } else {
+    log('Erro: Formulário inválido');
+  }
+},
                         ),
                       ),
                     ],

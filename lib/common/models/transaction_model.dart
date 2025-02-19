@@ -7,7 +7,7 @@ class TransactionModel {
 
   final String? category;
   final bool? status;
-  final String? id;
+  String? id;
   final String description;
 
   TransactionModel({
