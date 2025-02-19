@@ -7,6 +7,7 @@ import 'package:mps_app/repositories/transaction_repository.dart';
 import 'package:mps_app/services/auth_service.dart';
 import 'package:mps_app/services/firebase_auth_service.dart';
 import 'package:mps_app/services/secure_storage.dart';
+import 'features/transactions/transaction_controller.dart';
 
 final locator = GetIt.instance;
 
@@ -29,4 +30,12 @@ void setupDependences() {
 
   locator.registerLazySingleton<HomeController>(
     () => HomeController(locator.get<TransactionRepository>()));
+
+  locator.registerFactory<TransactionController>(
+    () => TransactionController(
+      repository: locator.get<TransactionRepository>(),
+      storage: const Securestorage(),
+    ),
+  );
+  
 }
