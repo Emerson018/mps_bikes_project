@@ -40,18 +40,23 @@ class TransactionController extends ChangeNotifier {
   }
 
   Future<void> updateTransaction(TransactionModel transaction) async {
-  log('Chamando updateTransaction no controller para ID: ${transaction.id}');
 
     _changeState(TransactionStateLoading());
     try {
       await repository.updateTransaction(transaction);
-      log('Transação atualizada com sucesso no controller');
       _changeState(TransactionStateSuccess());
     } catch (e) {
-      log('Erro no controller ao atualizar transação: $e');
       _changeState(TransactionStateError(message: e.toString()));
     }
   }
 
+  Future<void> deleteTransaction(TransactionModel transaction) async {
+    _changeState(TransactionStateLoading());
+    try {
+      await repository.deleteTransaction(transaction);
+      _changeState(TransactionStateSuccess());
+    } catch (e) {
+    _changeState(TransactionStateError(message: e.toString()));
+    }
+  }
 }
-

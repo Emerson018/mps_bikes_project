@@ -66,4 +66,21 @@ class HomeController extends ChangeNotifier {
       _changeState(HomeStateError());
     }
   }
+  Future<void> deleteTransaction(TransactionModel transaction) async {
+    _changeState(HomeStateLoading());
+    try {
+      // Deleta do Firestore
+      await _transactionRepository.deleteTransaction(transaction);
+
+      // Remove localmente
+      _transactions.removeWhere((t) => t.id == transaction.id);
+
+      // Recalcula os balanços (caso você precise manter a tela atualizada)
+      _calculateBalance();
+
+      _changeState(HomeStateSuccess());
+    } catch (e) {
+      _changeState(HomeStateError());
+    }
+  }
 }

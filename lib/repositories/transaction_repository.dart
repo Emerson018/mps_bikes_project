@@ -8,6 +8,7 @@ abstract class TransactionRepository {
   Future<void> addTransaction(TransactionModel transaction);
   Future<List<TransactionModel>> getAllTransactions();
   Future<void> updateTransaction(TransactionModel transaction);
+  Future<void> deleteTransaction(TransactionModel transaction);
 }
 
 class TransactionRepositoryImpl implements TransactionRepository {
@@ -74,5 +75,30 @@ Future<void> updateTransaction(TransactionModel transaction) async {
     throw Exception('Erro ao atualizar transação: $e');
   }
 }
+
+   @override
+  Future<void> deleteTransaction(TransactionModel transaction) async {
+    final user = _auth.currentUser;
+    if (user == null) throw Exception('Usuário não autenticado');
+
+    if (transaction.id == null) {
+      log('Erro: ID da transação é nulo, não é possível deletar');
+      throw Exception('ID da transação não pode ser nulo para exclusão');
+    }
+
+    try {
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('transactions')
+          .doc(transaction.id)
+          .delete();
+
+      log('Transação deletada com sucesso');
+    } catch (e) {
+      log('Erro ao deletar transação: $e');
+      throw Exception('Erro ao deletar transação: $e');
+    }
+  }
 
 }
