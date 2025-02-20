@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
+import 'package:mps_app/common/widgets/custom_snackbar.dart';
 import '../../common/constants/app_colors.dart';
 import '../../common/extensions/date_formatter.dart';
 import '../../common/extensions/sizes.dart';
@@ -28,7 +29,7 @@ class TransactionPage extends StatefulWidget {
   State<TransactionPage> createState() => _TransactionPageState();
 }
 class _TransactionPageState extends State<TransactionPage>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, CustomSnackBar {
   final _transactionController = TransactionController(
     repository: locator.get<TransactionRepository>(),
     storage: const Securestorage(),
@@ -61,6 +62,7 @@ class _TransactionPageState extends State<TransactionPage>
     _dateController.text = widget.transaction?.date != null
         ? DateTime.fromMillisecondsSinceEpoch(widget.transaction!.date).toText
         : '';
+    final state = _transactionController.state; //se bugar tira aqui
     _tabController = TabController(
       length: 2,
       vsync: this,
@@ -77,8 +79,17 @@ class _TransactionPageState extends State<TransactionPage>
       if (_transactionController.state is TransactionStateSuccess) {
         Navigator.pop(context);
       }
+      if (_transactionController.state is TransactionStateError) {
+        final error = _transactionController.state as TransactionStateError;
+        showCustomSnackBar(
+          context: context,
+          text: (state as TransactionStateError).message, //tira aqui se bugar
+          type: SnackBarType.error,
+        );
+      }
     });
   }
+  
   @override
   void dispose() {
     _tabController.dispose();

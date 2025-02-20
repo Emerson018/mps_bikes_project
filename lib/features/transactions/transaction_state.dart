@@ -13,6 +13,8 @@ class TransactionStateSuccess extends TransactionState {
 }
 
 class TransactionStateError extends TransactionState {
-  TransactionStateError(String string);
+  TransactionStateError({required this.message});
+
+  final String message;
 
 }

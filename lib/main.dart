@@ -19,6 +19,9 @@ void main() async {
     print('Erro: Plugin cloud_functions não registrado. Detalhes: $e');
   }
   setupDependences();
+
+  await locator.allReady();
+
   runApp(const App());
 }
 //CONTA DE TESTE NO FIREBASE:
@@ -34,3 +37,6 @@ void main() async {
 
 // não esquecer que controller ta com essa edição do chatgpt:
 //https://chatgpt.com/c/67b2985a-8f90-8009-b956-d2ab67e9a34a
+
+//implementar sistema de cache no firebase
+// implementar wallet page: https://www.youtube.com/watch?v=NVu-1od6T_g&t=1169s

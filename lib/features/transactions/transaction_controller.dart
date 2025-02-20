@@ -35,7 +35,7 @@ class TransactionController extends ChangeNotifier {
       
       _changeState(TransactionStateSuccess());
     } catch (e) {
-      _changeState(TransactionStateError(e.toString()));
+      _changeState(TransactionStateError(message: e.toString()));
     }
   }
 
@@ -49,7 +49,7 @@ class TransactionController extends ChangeNotifier {
       _changeState(TransactionStateSuccess());
     } catch (e) {
       log('Erro no controller ao atualizar transação: $e');
-      _changeState(TransactionStateError(e.toString()));
+      _changeState(TransactionStateError(message: e.toString()));
     }
   }
 
