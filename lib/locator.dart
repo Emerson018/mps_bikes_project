@@ -31,15 +31,4 @@ void setupDependences() {
 
   locator.registerLazySingleton<HomeController>(
     () => HomeController(locator.get<TransactionRepository>()));
-
-  locator.registerFactory<TransactionController>(
-    () => TransactionController(
-      repository: locator.get<TransactionRepository>(),
-      storage: const Securestorage(),
-    ),
-  );
-  
-  locator.registerLazySingleton(
-    () => WalletController(transactionRepository: locator.get<TransactionRepository>()),
-  );
 }
