@@ -29,7 +29,7 @@ class _SplashPageState extends State<SplashPage> {
       if(_splashController.state is SplashStateSuccess){
         Navigator.pushReplacementNamed(
           context,
-          NamedRoute.signIn, // no video 26 aqui tá em HOME aos 5:21
+          NamedRoute.home, // no video 26 aqui tá em HOME aos 5:21
         );
       } else{
         Navigator.pushReplacementNamed(

@@ -7,6 +7,7 @@ import 'package:mps_app/common/widgets/custom_bottom_sheet.dart';
 import 'package:mps_app/common/widgets/custom_circular_progress_indicator.dart';
 import 'package:mps_app/common/widgets/custom_text_button.dart';
 import 'package:mps_app/common/widgets/custom_text_form_field.dart';
+import 'package:mps_app/common/widgets/multi_text_button.dart';
 import 'package:mps_app/common/widgets/password_form_field.dart';
 import 'package:mps_app/common/widgets/primary_button.dart';
 import 'package:mps_app/features/sign_up/sign_up_controller.dart';
@@ -153,16 +154,25 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          MultiTextButton(
+            onPressed: () => Navigator.popAndPushNamed(
+              context,
+              NamedRoute.signIn,
+            ),
             children: [
               Text(
-                'Já possui uma conta?',
+                'Already have account? ',
                 style: AppTextStyles.smallText.copyWith(
                   color: AppColors.grey,
                 ),
               ),
-              CustomTextButtonLogIn(),
+              Text(
+                'Sign In ',
+                style: AppTextStyles.smallText.copyWith(
+                  color: AppColors.greenlightTwo,
+                ),
+              ),
+              
             ],
           ),
         ],

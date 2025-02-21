@@ -40,3 +40,8 @@ void main() async {
 
 //implementar sistema de cache no firebase
 // implementar wallet page: https://www.youtube.com/watch?v=NVu-1od6T_g&t=1169s
+
+//o video 40 é refatoraçao, entao pulei
+// o video 41 é fazer o sistema de offline, então pulei por enquanto
+
+//video 41 começa em 2:50
