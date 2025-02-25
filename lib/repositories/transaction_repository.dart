@@ -3,17 +3,40 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mps_app/common/models/transaction_model.dart';
+import 'package:mps_app/common/models/user_model.dart';
 
 abstract class TransactionRepository {
   Future<void> addTransaction(TransactionModel transaction);
   Future<List<TransactionModel>> getAllTransactions();
   Future<void> updateTransaction(TransactionModel transaction);
   Future<void> deleteTransaction(TransactionModel transaction);
+  Future<UserModel?> getUserData();
 }
 
 class TransactionRepositoryImpl implements TransactionRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  UserModel? _userData;
+
+  @override
+  UserModel? get userData => _userData;
+
+  @override
+  Future<UserModel?> getUserData() async {
+    final user = _auth.currentUser;
+    if (user == null) throw Exception('Usuário não autenticado');
+
+    final snapshot = await _firestore.collection('users').doc(user.uid).get();
+    //final snapshot = await _firestore.collection('users').doc(user.uid)
+
+    if (snapshot.exists) {
+      _userData = UserModel.fromMap(snapshot.data()!);
+      return _userData;
+    } else {
+      throw Exception('Dados do usuário não encontrados');
+    }
+  }
 
   @override
   Future<void> addTransaction(TransactionModel transaction) async {
@@ -47,36 +70,32 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-Future<void> updateTransaction(TransactionModel transaction) async {
-  final user = _auth.currentUser;
-  if (user == null) {
-    log('Erro: Usuário não autenticado');
-    throw Exception('Usuário não autenticado');
+  Future<void> updateTransaction(TransactionModel transaction) async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      log('Erro: Usuário não autenticado');
+      throw Exception('Usuário não autenticado');
+    }
+
+    if (transaction.id == null) {
+      log('Erro: ID da transação é nulo, não é possível atualizar');
+      throw Exception('ID da transação não pode ser nulo para atualização');
+    }
+
+    try {
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('transactions')
+          .doc(transaction.id)
+          .update(transaction.toMap());
+    } catch (e) {
+      log('Erro ao atualizar transação: $e');
+      throw Exception('Erro ao atualizar transação: $e');
+    }
   }
 
-  if (transaction.id == null) {
-    log('Erro: ID da transação é nulo, não é possível atualizar');
-    throw Exception('ID da transação não pode ser nulo para atualização');
-  }
-
-  try {
-    log('Atualizando transação ID: ${transaction.id} com dados: ${transaction.toMap()}');
-
-    await _firestore
-        .collection('users')
-        .doc(user.uid)
-        .collection('transactions')
-        .doc(transaction.id) // Atualiza o documento com o ID correto
-        .update(transaction.toMap());
-
-    log('Transação atualizada com sucesso');
-  } catch (e) {
-    log('Erro ao atualizar transação: $e');
-    throw Exception('Erro ao atualizar transação: $e');
-  }
-}
-
-   @override
+  @override
   Future<void> deleteTransaction(TransactionModel transaction) async {
     final user = _auth.currentUser;
     if (user == null) throw Exception('Usuário não autenticado');
@@ -93,12 +112,9 @@ Future<void> updateTransaction(TransactionModel transaction) async {
           .collection('transactions')
           .doc(transaction.id)
           .delete();
-
-      log('Transação deletada com sucesso');
     } catch (e) {
       log('Erro ao deletar transação: $e');
       throw Exception('Erro ao deletar transação: $e');
     }
   }
-
 }

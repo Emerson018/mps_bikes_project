@@ -45,3 +45,5 @@ void main() async {
 // o video 41 é fazer o sistema de offline, então pulei por enquanto
 
 //video 41 começa em 2:50
+
+//PULEI O VIDEO 45  

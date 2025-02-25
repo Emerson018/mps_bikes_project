@@ -8,6 +8,9 @@ class PasswordFormField extends StatefulWidget {
   final String? labelText;
   final FormFieldValidator<String>? validator;
   final String?helperText;
+  final FocusNode? focusNode;
+  final ValueSetter<PointerEvent>? onTapOutside;
+  final VoidCallback? onEditingComplete;
 
   const PasswordFormField({
     super.key,
@@ -16,7 +19,10 @@ class PasswordFormField extends StatefulWidget {
     this.hintText,
     this.labelText,
     this.validator, 
-    this.helperText
+    this.helperText,
+    this.focusNode,
+    this.onTapOutside,
+    this.onEditingComplete
     }
   );
 

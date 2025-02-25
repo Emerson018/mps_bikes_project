@@ -44,40 +44,31 @@ class FirebaseAuthService implements AuthService {
 
   @override
   Future<UserModel> signUp({
-    String? name,
-    required String email,
-    required String password,
-  }) async {
-    try {
-      final result = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
+  String? name,
+  required String email,
+  required String password,
+}) async {
+  try {
+    final result = await _auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    // Chame seu método createUser passando também o name
+    await FirestoreDataSource().createUser(email, name ?? '');
+
+    if (result.user != null) {
+      // Se quiser, também pode atualizar o displayName no Firebase Auth
+      // await result.user!.updateDisplayName(name);
+
+      // Token para Hasura
+      final token = await result.user!.getIdTokenResult(true);
+
+      return UserModel(
+        name: name,
+        email: result.user!.email,
+        id: result.user!.uid,
       );
-
-      FirestoreDataSource().createUser(email);
-
-        //await _functions.httpsCallable('registerUser').call({
-        //    "email": email,
-        //    "password": password,
-
-        //});
-
-    //final result = await _auth.signInWithEmailAndPassword(
-    //  email: email,
-    //  password: password
-    //);
-
-
-      if (result.user != null) {
-        // 4. Atualizar token para Hasura
-        final token = await result.user!.getIdTokenResult(true);
-        log('Token JWT: ${token.token}');
-
-        return UserModel(
-          name: result.user!.displayName,
-          email: result.user!.email,
-          id: result.user!.uid,
-        );
       } else {
         throw Exception('Usuário não encontrado após o registro.');
       }

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:mps_app/common/constants/app_colors.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
@@ -19,6 +20,10 @@ class CustomTextFormField extends StatefulWidget {
   final String? helperText;
   final GestureTapCallback? onTap;
   final bool readOnly;
+  final FocusNode? focusNode;
+  final ValueSetter<PointerEvent>? onTapOutside;
+  final VoidCallback? onEditingComplete;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextFormField({
     Key? key,
@@ -36,6 +41,11 @@ class CustomTextFormField extends StatefulWidget {
     this.helperText,
     this.onTap,
     this.readOnly = false,
+    this.focusNode,
+    this.onTapOutside,
+    this.onEditingComplete, 
+    this.inputFormatters,
+    
   }) : super(key: key);
 
   @override
