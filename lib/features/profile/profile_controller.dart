@@ -8,6 +8,7 @@ class ProfileController extends ChangeNotifier {
   final dynamic _userDataService;
   void onChangeNameTapped() => toggleChangeName();
   void onChangePasswordTapped() => toggleChangePassword();
+  
 
 
   ProfileController({required userDataService})
@@ -40,6 +41,8 @@ class ProfileController extends ChangeNotifier {
 
   bool get canSave => enabledButton && state is! ProfileStateLoading;
 
+  bool isButtonEnabled = false;
+
   void _changeState(ProfileState newState) {
     _state = newState;
     notifyListeners();
@@ -58,9 +61,9 @@ class ProfileController extends ChangeNotifier {
   }
 
   /// Atualiza o estado do botão (habilitado/desabilitado).
-  void toggleButtonTap(bool value) {
-    _enabledButton = value;
-    _changeState(ProfileStateInitial());
+  void toggleButtonTap(bool enabled) {
+    isButtonEnabled = enabled;
+    notifyListeners();
   }
 
   /// Busca os dados do usuário.

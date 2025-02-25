@@ -11,11 +11,14 @@ abstract class TransactionRepository {
   Future<void> updateTransaction(TransactionModel transaction);
   Future<void> deleteTransaction(TransactionModel transaction);
   Future<UserModel?> getUserData();
+  Future<void> updateUserName(String newName);
+  
 }
 
 class TransactionRepositoryImpl implements TransactionRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  
 
   UserModel? _userData;
 
@@ -115,6 +118,23 @@ class TransactionRepositoryImpl implements TransactionRepository {
     } catch (e) {
       log('Erro ao deletar transação: $e');
       throw Exception('Erro ao deletar transação: $e');
+    }
+  }
+  @override
+  Future<void> updateUserName(String newName) async {
+    final user = _auth.currentUser;
+    if (user == null) throw Exception('Usuário não autenticado');
+
+    try {
+      await _firestore.collection('users').doc(user.uid).update({
+        'name': newName, // Atualiza o campo 'name' no Firestore
+      });
+
+      // Atualiza localmente também
+      _userData = _userData?.copyWith(name: newName);
+    } catch (e) {
+      log('Erro ao atualizar nome do usuário: $e');
+      throw Exception('Erro ao atualizar nome: $e');
     }
   }
 }

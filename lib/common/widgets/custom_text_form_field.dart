@@ -24,6 +24,7 @@ class CustomTextFormField extends StatefulWidget {
   final ValueSetter<PointerEvent>? onTapOutside;
   final VoidCallback? onEditingComplete;
   final List<TextInputFormatter>? inputFormatters;
+  final ValueChanged<String>? onChanged;
 
   const CustomTextFormField({
     Key? key,
@@ -45,6 +46,7 @@ class CustomTextFormField extends StatefulWidget {
     this.onTapOutside,
     this.onEditingComplete, 
     this.inputFormatters,
+    this.onChanged,
     
   }) : super(key: key);
 

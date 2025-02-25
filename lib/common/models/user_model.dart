@@ -14,6 +14,20 @@ class UserModel {
    this.password
   });
 
+  UserModel copyWith({
+    String? id,
+    String? name,
+    String? email,
+    String? password,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      password: password ?? this.password,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
@@ -22,6 +36,8 @@ class UserModel {
       'password': password,
     };
   }
+
+  
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(

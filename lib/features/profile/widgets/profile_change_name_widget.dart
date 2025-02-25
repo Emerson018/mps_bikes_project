@@ -1,108 +1,91 @@
 import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_colors.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
-import 'package:mps_app/common/utils/validator.dart';
-import 'package:mps_app/common/widgets/custom_snackbar.dart';
+import 'package:mps_app/common/extensions/sizes.dart';
 import 'package:mps_app/common/widgets/custom_text_form_field.dart';
-import 'package:mps_app/features/profile/profile_controller.dart';
+import '../profile_controller.dart';
 
 class ProfileChangeNameWidget extends StatefulWidget {
-  const ProfileChangeNameWidget({
-    super.key,
-    required ProfileController profileController,
-  }) : _profileController = profileController;
+  final ProfileController profileController;
 
-  final ProfileController _profileController;
+  const ProfileChangeNameWidget({
+    Key? key,
+    required this.profileController,
+  }) : super(key: key);
 
   @override
-  State<ProfileChangeNameWidget> createState() =>
-      _ProfileChangeNameWidgetState();
+  State<ProfileChangeNameWidget> createState() => _ProfileChangeNameWidgetState();
 }
 
-class _ProfileChangeNameWidgetState extends State<ProfileChangeNameWidget>
-    with CustomSnackBar {
-  final _textEditingController = TextEditingController();
-  final _focusNode = FocusNode();
-  final _formKey = GlobalKey<FormState>();
+class _ProfileChangeNameWidgetState extends State<ProfileChangeNameWidget> {
+  final TextEditingController _nameController = TextEditingController();
+  bool isButtonEnabled = false;
 
   @override
   void initState() {
     super.initState();
-
-    _textEditingController.addListener(handleNameChange);
+    _nameController.addListener(_updateButtonState);
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
-
+    _nameController.removeListener(_updateButtonState);
+    _nameController.dispose();
     super.dispose();
   }
 
-  void handleNameChange() {
-    if (_formKey.currentState != null && _focusNode.hasFocus) {
-      widget._profileController
-          .toggleButtonTap(_formKey.currentState?.validate() ?? false);
-    }
+  void _updateButtonState() {
+    setState(() {
+      isButtonEnabled = _nameController.text.trim().isNotEmpty;
+    });
   }
 
-  Future<void> onNewNameSavePressed() async {
-    if (_focusNode.hasFocus) _focusNode.unfocus();
-
-    await widget._profileController.updateUserName(_textEditingController.text);
-
-    _textEditingController.clear();
+  Future<void> _saveNewName() async {
+    final newName = _nameController.text.trim();
+    if (newName.isNotEmpty) {
+      await widget.profileController.updateUserName(newName);
+      widget.profileController.toggleChangeName(); // Fecha o widget após salvar
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      key: UniqueKey(),
+      key: const ValueKey('change-name-widget'),
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Form(
-          key: _formKey,
-          child: CustomTextFormField(
-            inputFormatters: [],
-            controller: _textEditingController,
-            focusNode: _focusNode,
-            labelText: 'New name',
-            onTapOutside: (_) => _focusNode.unfocus(),
-            validator: (_) =>
-                Validator.validateName(_textEditingController.text),
-            onEditingComplete:
-                widget._profileController.canSave ? onNewNameSavePressed : null,
-          ),
+        Text(
+          'Change Name',
+          style: AppTextStyles.mediumText20.apply(color: AppColors.darkGrey),
         ),
-        const SizedBox(height: 16.0),
+        SizedBox(height: 24.h),
+        
+        /// Campo de texto para inserir o novo nome
+        CustomTextFormField(
+          labelText: 'New Name',
+          controller: _nameController,
+          onChanged: (value) => _updateButtonState(),
+        ),
+        SizedBox(height: 24.h),
+        
+        /// Botões "Cancel" e "Save"
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  _textEditingController.clear();
-                  widget._profileController.toggleChangeName();
-                  widget._profileController.toggleButtonTap(false);
-                },
-                child: Text(
-                  'Cancel',
-                  style: AppTextStyles.mediumText16w500
-                      .apply(color: AppColors.green),
-                ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.greenlightOne,
               ),
+              onPressed: widget.profileController.toggleChangeName,
+              child: const Text('Cancel'),
             ),
-            const SizedBox(width: 16.0),
-            Expanded(
-              child: TextButton(
-                onPressed: widget._profileController.canSave
-                    ? onNewNameSavePressed
-                    : null,
-                child: Text(
-                  'Save',
-                  style: AppTextStyles.mediumText16w500
-                      .apply(color: AppColors.green),
-                ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isButtonEnabled ? AppColors.greenlightTwo : Colors.grey,
               ),
+              onPressed: isButtonEnabled ? _saveNewName : null ,
+              
+              child: const Text('Save'),
             ),
           ],
         ),

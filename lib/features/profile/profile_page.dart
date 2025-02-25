@@ -170,14 +170,14 @@ class _ProfilePageState extends State<ProfilePage>
                         Text(
                           (_profileController.userData.name ?? 'sem nome'),
                           style: AppTextStyles.mediumText20.apply(
-                            color: AppColors.green,
+                            color: AppColors.darkGrey,
                           ),
                         ),
                         SizedBox(height: 4.h),
                         Text(
                           _profileController.userData.email ?? '',
                           style: AppTextStyles.smallText.apply(
-                            color: AppColors.green,
+                            color: AppColors.greenlightOne,
                           ),
                         ),
                       ],
@@ -216,18 +216,18 @@ class _ProfilePageState extends State<ProfilePage>
                                 children: [
                                   TextButton.icon(
                                     onPressed: () {
-                                      _profileController.updateUserName;
+                                       _profileController.onChangeNameTapped();
                                     },
                                     icon: const Icon(
                                       Icons.person,
-                                      color: AppColors.green,
+                                      color: AppColors.greenlightTwo,
                                     ),
                                     label: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         'Change name',
                                         style: AppTextStyles.mediumText16w500
-                                            .apply(color: AppColors.green),
+                                            .apply(color: AppColors.greenlightTwo),
                                         textAlign: TextAlign.start,
                                       ),
                                     ),
@@ -235,18 +235,18 @@ class _ProfilePageState extends State<ProfilePage>
                                   TextButton.icon(
                                     onPressed: () {
                                       _profileController
-                                          .updateUserName;
+                                          .onChangePasswordTapped();
                                     },
                                     icon: const Icon(
                                       Icons.lock_person_rounded,
-                                      color: AppColors.green,
+                                      color: AppColors.greenlightTwo,
                                     ),
                                     label: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         'Change password',
                                         style: AppTextStyles.mediumText16w500
-                                            .apply(color: AppColors.green),
+                                            .apply(color: AppColors.greenlightTwo),
                                         textAlign: TextAlign.start,
                                       ),
                                     ),
@@ -256,14 +256,14 @@ class _ProfilePageState extends State<ProfilePage>
                                     },
                                     icon: const Icon(
                                       Icons.policy,
-                                      color: AppColors.green,
+                                      color: AppColors.greenlightTwo,
                                     ),
                                     label: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         'Agreements',
                                         style: AppTextStyles.mediumText16w500
-                                            .apply(color: AppColors.green),
+                                            .apply(color: AppColors.greenlightTwo),
                                         textAlign: TextAlign.start,
                                       ),
                                     ),
@@ -278,14 +278,14 @@ class _ProfilePageState extends State<ProfilePage>
                                     },
                                     icon: const Icon(
                                       Icons.delete_forever,
-                                      color: AppColors.green,
+                                      color: AppColors.greenlightTwo,
                                     ),
                                     label: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         'Delete account',
                                         style: AppTextStyles.mediumText16w500
-                                            .apply(color: AppColors.green),
+                                            .apply(color: AppColors.greenlightTwo),
                                         textAlign: TextAlign.start,
                                       ),
                                     ),
@@ -302,14 +302,14 @@ class _ProfilePageState extends State<ProfilePage>
                                       //_syncController.syncFromServer();
                                     icon: const Icon(
                                       Icons.logout_outlined,
-                                      color: AppColors.green,
+                                      color: AppColors.greenlightTwo,
                                     ),
                                     label: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         'Logout',
                                         style: AppTextStyles.mediumText16w500
-                                            .apply(color: AppColors.green),
+                                            .apply(color: AppColors.greenlightTwo),
                                         textAlign: TextAlign.start,
                                       ),
                                     ),

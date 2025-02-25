@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mps_app/common/models/user_model.dart';
@@ -7,7 +8,7 @@ import 'package:mps_app/services/firebase_database.dart';
 
 class FirebaseAuthService implements AuthService {
   final _auth = FirebaseAuth.instance;
-  final _functions = FirebaseFunctions.instance;
+  final _firestore = FirebaseFirestore.instance;
 
   @override
   Future<UserModel> signIn({
@@ -90,6 +91,60 @@ class FirebaseAuthService implements AuthService {
       await _auth.signOut();
     } catch (e) {
       log('Erro ao fazer logout: $e');
+      rethrow;
+    }
+  }
+
+    /// Atualiza o nome do usuário tanto no displayName do FirebaseAuth
+  /// quanto no documento Firestore do usuário (campo "name").
+  Future<void> updateUserName(String newName) async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      throw Exception('Nenhum usuário logado.');
+    }
+
+    try {
+      // 1) Atualiza o displayName no Firebase Auth
+      await user.updateDisplayName(newName);
+
+      // 2) Atualiza no Firestore (coleção "users", doc = user.uid)
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .update({'name': newName});
+
+      log('Nome do usuário atualizado para $newName no FirebaseAuth e Firestore.');
+    } on FirebaseAuthException catch (e) {
+      log('Erro ao atualizar nome: ${e.message}');
+      throw e.message ?? "Erro ao atualizar nome no Firebase Auth.";
+    } catch (e) {
+      log('Erro inesperado ao atualizar nome: $e');
+      rethrow;
+    }
+  }
+
+  /// Atualiza a senha do usuário no FirebaseAuth.
+  /// Se a sessão estiver “antiga”, pode precisar de reautenticação.
+  Future<void> updatePassword(String newPassword) async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      throw Exception('Nenhum usuário logado.');
+    }
+
+    try {
+      await user.updatePassword(newPassword);
+      log('Senha do usuário atualizada com sucesso no FirebaseAuth.');
+    } on FirebaseAuthException catch (e) {
+      // Caso precise de reautenticação, você pode capturar aqui:
+      if (e.code == 'requires-recent-login') {
+        // Por exemplo, você pode notificar o controller
+        // para que exiba um fluxo de reautenticação
+        // e, depois, tente novamente updatePassword(newPassword).
+      }
+      log('Erro ao atualizar senha: ${e.message}');
+      throw e.message ?? "Erro ao atualizar senha no Firebase Auth.";
+    } catch (e) {
+      log('Erro inesperado ao atualizar senha: $e');
       rethrow;
     }
   }
