@@ -63,3 +63,39 @@ class Validator {
       return null;
     } 
 }
+
+class PasswordRequirement {
+  final bool isValid;
+  final String message;
+
+  PasswordRequirement({
+    required this.isValid,
+    required this.message,
+  });
+}
+
+/// Retorna uma lista de requisitos da senha (atendidos ou não).
+List<PasswordRequirement> checkPasswordRequirements(String password) {
+  return [
+    PasswordRequirement(
+      isValid: RegExp(r".{8,}").hasMatch(password),
+      message: "• Mínimo 8 caracteres.",
+    ),
+    PasswordRequirement(
+      isValid: RegExp(r"(?=.*[A-Z])").hasMatch(password),
+      message: "• Pelo menos 1 letra maiúscula.",
+    ),
+    PasswordRequirement(
+      isValid: RegExp(r"(?=.*[a-z])").hasMatch(password),
+      message: "• Pelo menos 1 letra minúscula.",
+    ),
+    PasswordRequirement(
+      isValid: RegExp(r"(?=.*\d)").hasMatch(password),
+      message: "• Pelo menos 1 número.",
+    ),
+    PasswordRequirement(
+      isValid: RegExp(r"(?=.*[@$!%*?&])").hasMatch(password),
+      message: "• Pelo menos 1 caractere especial (@, \$, !, %, *, ?, &).",
+    ),
+  ];
+}

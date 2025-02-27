@@ -96,21 +96,23 @@ class ProfileController extends ChangeNotifier {
 
   /// Atualiza a senha do usuário.
   Future<void> updateUserPassword(String newPassword) async {
-    _changeState(ProfileStateLoading());
-    try {
-      await _userDataService.updatePassword(newPassword);
-      _showUpdatedPasswordMessage = true;
-      _showUpdatedNameMessage = false;
-      // Esconde o widget de alteração de senha
-      _showChangePassword = false;
-      // Desabilita o botão de salvar
-      _enabledButton = false;
-      _changeState(ProfileStateSuccess());
-    } catch (e) {
-      _reauthRequired = true;
-      _changeState(ProfileStateError(message: e.toString()));
-    }
+  _changeState(ProfileStateLoading());
+  try {
+    // Chame o método que você adicionou no TransactionRepositoryImpl
+    await _userDataService.updateUserPassword(newPassword);
+
+    _showUpdatedPasswordMessage = true;
+    _showUpdatedNameMessage = false;
+    // Fecha o widget de troca de senha
+    _showChangePassword = false;
+    // Desabilita o botão
+    _enabledButton = false;
+    _changeState(ProfileStateSuccess());
+  } catch (e) {
+    _reauthRequired = true;
+    _changeState(ProfileStateError(message: e.toString()));
   }
+}
 
   /// Exclui a conta do usuário.
   Future<void> deleteAccount() async {

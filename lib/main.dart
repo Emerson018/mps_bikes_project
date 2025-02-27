@@ -24,9 +24,6 @@ void main() async {
 
   runApp(const App());
 }
-//CONTA DE TESTE NO FIREBASE:
-// EMAIL: emersonlima.018@hotmail.com
-// SENHA: MPs!bikes018
 
 //CONTAA DE TESTE FIREBASE E FIRESTORE:
 //EMAIL: firestoreteste@gmail.com

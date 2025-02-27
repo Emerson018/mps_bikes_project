@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_colors.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
-import 'package:mps_app/common/constants/routes.dart';
 import 'package:mps_app/common/extensions/sizes.dart';
 import 'package:mps_app/common/widgets/app_header.dart';
 import 'package:mps_app/common/widgets/custom_circular_progress_indicator.dart';
@@ -291,7 +290,6 @@ class _ProfilePageState extends State<ProfilePage>
                                     ),
                                   ),
                                   TextButton.icon(
-                                    //key: Keys.profilePagelogoutButton,
                                     onPressed: () async{
                                      await locator.get<AuthService>().signOut();
                                       await const Securestorage().deleteAll();
@@ -299,7 +297,6 @@ class _ProfilePageState extends State<ProfilePage>
                                         Navigator.popUntil(context, ModalRoute.withName('/'));
                                       }
                                     },
-                                      //_syncController.syncFromServer();
                                     icon: const Icon(
                                       Icons.logout_outlined,
                                       color: AppColors.greenlightTwo,

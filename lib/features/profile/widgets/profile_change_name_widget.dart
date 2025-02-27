@@ -44,7 +44,6 @@ class _ProfileChangeNameWidgetState extends State<ProfileChangeNameWidget> {
     final newName = _nameController.text.trim();
     if (newName.isNotEmpty) {
       await widget.profileController.updateUserName(newName);
-      widget.profileController.toggleChangeName(); // Fecha o widget após salvar
     }
   }
 

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_colors.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
-import 'package:mps_app/common/utils/validator.dart';
-import 'package:mps_app/common/widgets/custom_snackbar.dart';
 import 'package:mps_app/common/widgets/password_form_field.dart';
 import 'package:mps_app/features/profile/profile_controller.dart';
+import 'package:mps_app/common/utils/validator.dart'; // Onde estiver sua função checkPasswordRequirements
 
 class ProfileChangePasswordWidget extends StatefulWidget {
-  const ProfileChangePasswordWidget({
-    super.key,
-    required ProfileController profileController,
-  }) : _profileController = profileController;
+  final ProfileController profileController;
 
-  final ProfileController _profileController;
+  const ProfileChangePasswordWidget({
+    Key? key,
+    required this.profileController,
+  }) : super(key: key);
 
   @override
   State<ProfileChangePasswordWidget> createState() =>
@@ -20,87 +19,118 @@ class ProfileChangePasswordWidget extends StatefulWidget {
 }
 
 class _ProfileChangePasswordWidgetState
-    extends State<ProfileChangePasswordWidget> with CustomSnackBar {
-  final _textEditingController = TextEditingController();
-  final _focusNode = FocusNode();
-  final _formKey = GlobalKey<FormState>();
+    extends State<ProfileChangePasswordWidget> {
+  final TextEditingController _passwordController = TextEditingController();
+
+  /// Lista de requisitos que será atualizada conforme o usuário digita
+  List<PasswordRequirement> _requirements = [];
+
+  /// Indica se todos os critérios foram atendidos
+  bool isButtonEnabled = false;
 
   @override
   void initState() {
     super.initState();
-
-    _textEditingController.addListener(handlePasswordChange);
+    _passwordController.addListener(_onPasswordChanged);
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
-    _focusNode.dispose();
+    _passwordController.removeListener(_onPasswordChanged);
+    _passwordController.dispose();
     super.dispose();
   }
 
-  void handlePasswordChange() {
-    if (_formKey.currentState != null && _focusNode.hasFocus) {
-      widget._profileController
-          .toggleButtonTap(_formKey.currentState?.validate() ?? false);
-    }
+  /// Sempre que o texto muda, analisamos os requisitos e atualizamos o estado
+  void _onPasswordChanged() {
+    final password = _passwordController.text;
+    final checked = checkPasswordRequirements(password);
+
+    setState(() {
+      _requirements = checked;
+      // Botão habilita se TODOS os requisitos estiverem válidos
+      isButtonEnabled = checked.every((req) => req.isValid);
+    });
   }
 
-  Future<void> onNewPasswordSavePressed() async {
-    if (_focusNode.hasFocus) _focusNode.unfocus();
+  /// Salva a nova senha chamando o método no ProfileController
+  Future<void> _saveNewPassword() async {
+    if (!isButtonEnabled) return;
 
-    await widget._profileController
-        .updateUserPassword(_textEditingController.text);
+    final newPassword = _passwordController.text.trim();
+    if (newPassword.isNotEmpty) {
+      try {
+        await widget.profileController.updateUserPassword(newPassword);
+        widget.profileController.onChangePasswordTapped(); // Fecha o widget
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao atualizar senha: $e')),
+        );
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      key: UniqueKey(),
+      key: const ValueKey('change-password-widget'),
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Form(
-          key: _formKey,
-          child: PasswordFormField(
-            controller: _textEditingController,
-            focusNode: _focusNode,
-            labelText: 'New password',
-            onTapOutside: (_) => _focusNode.unfocus(),
-            validator: (_) =>
-                Validator.validatePassword(_textEditingController.text),
-            onEditingComplete: widget._profileController.canSave
-                ? onNewPasswordSavePressed
-                : null,
-          ),
+        Text(
+          'Change Password',
+          style: AppTextStyles.mediumText20.apply(color: AppColors.darkGrey),
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: 24),
+        PasswordFormField(
+          controller: _passwordController,
+          labelText: 'New Password',
+        ),
+        const SizedBox(height: 16),
+
+        // Lista de requisitos: cada item mostra se está OK (verde) ou não (vermelho)
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: _requirements.map((req) {
+            return Row(
+              children: [
+                Icon(
+                  req.isValid ? Icons.check_circle : Icons.cancel,
+                  color: req.isValid ? Colors.green : Colors.red,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    req.message,
+                    style: TextStyle(
+                      color: req.isValid ? Colors.green : Colors.red,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }).toList(),
+        ),
+
+        const SizedBox(height: 24),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  widget._profileController.onChangePasswordTapped();
-                  widget._profileController.toggleButtonTap(false);
-                },
-                child: Text(
-                  'Cancel',
-                  style: AppTextStyles.mediumText16w500
-                      .apply(color: AppColors.green),
-                ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.greenlightOne,
               ),
+              onPressed: widget.profileController.onChangePasswordTapped,
+              child: const Text('Cancel'),
             ),
-            const SizedBox(width: 16.0),
-            Expanded(
-              child: TextButton(
-                onPressed: widget._profileController.canSave
-                    ? onNewPasswordSavePressed
-                    : null,
-                child: Text(
-                  'Save',
-                  style: AppTextStyles.mediumText16w500
-                      .apply(color: AppColors.green),
-                ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isButtonEnabled
+                    ? AppColors.greenlightTwo
+                    : Colors.grey,
               ),
+              onPressed: isButtonEnabled ? _saveNewPassword : null,
+              child: const Text('Save'),
             ),
           ],
         ),

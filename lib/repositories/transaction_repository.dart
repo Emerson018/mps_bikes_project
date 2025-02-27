@@ -12,6 +12,7 @@ abstract class TransactionRepository {
   Future<void> deleteTransaction(TransactionModel transaction);
   Future<UserModel?> getUserData();
   Future<void> updateUserName(String newName);
+  Future<void> updateUserPassword(String newPassword);
   
 }
 
@@ -135,6 +136,28 @@ class TransactionRepositoryImpl implements TransactionRepository {
     } catch (e) {
       log('Erro ao atualizar nome do usuário: $e');
       throw Exception('Erro ao atualizar nome: $e');
+    }
+  }
+
+  @override
+  Future<void> updateUserPassword(String newPassword) async {
+    final user = _auth.currentUser;
+    if (user == null) throw Exception('Usuário não autenticado');
+
+    try {
+      await user.updatePassword(newPassword);
+      log('Senha do usuário atualizada com sucesso no FirebaseAuth.');
+    } on FirebaseAuthException catch (e) {
+      // Caso precise de reautenticação
+      if (e.code == 'requires-recent-login') {
+        log('Necessita de reautenticação: ${e.message}');
+        throw Exception('Necessita de reautenticação: ${e.message}');
+      }
+      log('Erro ao atualizar senha: ${e.message}');
+      throw Exception(e.message ?? 'Erro ao atualizar senha.');
+    } catch (e) {
+      log('Erro inesperado ao atualizar senha: $e');
+      rethrow;
     }
   }
 }
