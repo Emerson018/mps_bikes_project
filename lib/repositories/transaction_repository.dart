@@ -13,6 +13,10 @@ abstract class TransactionRepository {
   Future<UserModel?> getUserData();
   Future<void> updateUserName(String newName);
   Future<void> updateUserPassword(String newPassword);
+  Future<List<TransactionModel>> getTransactionsByDateRange({
+    required DateTime startDate,
+    required DateTime endDate,
+  });
   
 }
 
@@ -160,4 +164,29 @@ class TransactionRepositoryImpl implements TransactionRepository {
       rethrow;
     }
   }
+
+   @override
+  Future<List<TransactionModel>> getTransactionsByDateRange({
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    final user = _auth.currentUser;
+    if (user == null) throw Exception('Usuário não autenticado');
+
+    final snapshot = await _firestore
+        .collection('users')
+        .doc(user.uid)
+        .collection('transactions')
+        .where('date', isGreaterThanOrEqualTo: startDate.millisecondsSinceEpoch)
+        .where('date', isLessThanOrEqualTo: endDate.millisecondsSinceEpoch)
+        .orderBy('date', descending: true)
+        .get();
+
+    return snapshot.docs.map((doc) {
+      final transaction = TransactionModel.fromMap(doc.data());
+      transaction.id = doc.id;
+      return transaction;
+    }).toList();
+  }
+ 
 }

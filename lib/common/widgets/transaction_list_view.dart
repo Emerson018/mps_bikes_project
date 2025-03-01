@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_colors.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
+import 'package:mps_app/common/models/transaction_model.dart';
 import 'package:mps_app/features/home/home_controller.dart';
-import 'package:mps_app/features/transactions/transaction_controller.dart';
 import 'package:mps_app/locator.dart';
 
 class TransactionListView extends StatelessWidget {
   const TransactionListView({
     super.key,
     required this.controller,
+    required this.transactionList,
+    required this.onChange,
+    this.selectedDate,
   });
 
   final HomeController controller;
+  final List<TransactionModel> transactionList;
+  final DateTime? selectedDate;
 
+  ///Called when transaction is updated or deleted
+  final VoidCallback onChange;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

@@ -95,8 +95,12 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       }
-                      return TransactionListView(controller: controller);
+                      return TransactionListView(
+                        controller: controller,
+                        transactionList: controller.transactions,
+                        onChange: () {  },);
                     }
+                    
                   ),
                 ),
               ],

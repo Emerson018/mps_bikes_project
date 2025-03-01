@@ -4,6 +4,7 @@ import 'package:mps_app/features/profile/profile_controller.dart';
 import 'package:mps_app/features/sign_in/sign_in_controller.dart';
 import 'package:mps_app/features/sign_up/sign_up_controller.dart';
 import 'package:mps_app/features/splash/splash_controller.dart';
+import 'package:mps_app/features/stats/stats_controller.dart';
 import 'package:mps_app/features/wallets/wallet_controller.dart';
 import 'package:mps_app/repositories/transaction_repository.dart';
 import 'package:mps_app/services/auth_service.dart';
@@ -47,4 +48,7 @@ void setupDependences() {
 
    locator.registerFactory<ProfileController>(
       () => ProfileController(userDataService: locator.get<TransactionRepository>()));
+
+  locator.registerLazySingleton<StatsController>(() => StatsController(
+      transactionRepository: locator.get<TransactionRepository>()));
 }
