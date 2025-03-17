@@ -52,7 +52,6 @@ class _SignInPageState extends State<SignInPage> {
           NamedRoute.home);
       }
       if (_controller.state is SignInStateError) {
-        final error = _controller.state as SignInStateError;
         Navigator.pop(context);
         customModalBottomSheet(
           context,

@@ -5,7 +5,6 @@ import 'package:mps_app/common/extensions/sizes.dart';
 import 'package:mps_app/common/widgets/app_header.dart';
 import 'package:mps_app/common/widgets/custom_circular_progress_indicator.dart';
 import 'package:mps_app/common/widgets/custom_snackbar.dart';
-import 'package:mps_app/common/widgets/custom_text_form_field.dart';
 import 'package:mps_app/services/auth_service.dart';
 import 'package:mps_app/services/secure_storage.dart';
 import '../../locator.dart';
@@ -24,14 +23,12 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage>
     with CustomSnackBar {
   final _profileController = locator.get<ProfileController>();
-  //final _syncController = locator.get<SyncController>();
 
   @override
   void initState() {
     super.initState();
     _profileController.getUserData();
     _profileController.addListener(_handleProfileStateChange);
-    //_syncController.addListener(_handleSyncStateChange);
   }
 
   @override
@@ -48,20 +45,6 @@ class _ProfilePageState extends State<ProfilePage>
     switch (state.runtimeType) {
       case ProfileStateError:
         if (!mounted) return;
-
-        if (_profileController.reauthRequired) {
-          /*showCustomModalBottomSheet(
-            context: context,
-            content: (_profileController.state as ProfileStateError).message,
-            buttonText: 'Go to login',
-            isDismissible: false,
-            onPressed: () => Navigator.pushNamedAndRemoveUntil(
-              context,
-              NamedRoute.initial,
-              (route) => false,
-            ),
-          );*/
-        }
 
         if (_profileController.showChangeName ||
             _profileController.showChangePassword) {
@@ -90,47 +73,6 @@ class _ProfilePageState extends State<ProfilePage>
         }
     }
   }
-
-  /*void _handleSyncStateChange() async {
-    switch (_syncController.state.runtimeType) {
-      case DownloadingDataFromServer:
-        showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (context) => const PopScope(
-            canPop: false,
-            child: CustomCircularProgressIndicator(),
-          ),
-        );
-        break;
-      case DownloadedDataFromServer:
-        _syncController.syncToServer();
-        break;
-      case UploadedDataToServer:
-        Navigator.pop(context);
-        await locator.get<AuthService>().signOut();
-        await locator.get<SecureStorageService>().deleteAll();
-        await locator.get<DatabaseService>().deleteDB;
-        if (!mounted) return;
-
-        Navigator.popAndPushNamed(
-          context,
-          NamedRoute.initial,
-        );
-        break;
-      case SyncStateError:
-      case UploadDataToServerError:
-      case DownloadDataFromServerError:
-        Navigator.pop(context);
-        showCustomModalBottomSheet(
-          context: context,
-          content: (_syncController.state as SyncStateError).message,
-          buttonText: "Try again",
-          onPressed: () => Navigator.of(context).pop(),
-        );
-        break;
-    }
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -269,11 +211,6 @@ class _ProfilePageState extends State<ProfilePage>
                                   ),
                                   TextButton.icon(
                                     onPressed: () {
-                                      CustomTextFormField(
-                                        onTap: () async {
-                                          //TODO agreements
-                                        },
-                                      );
                                     },
                                     icon: const Icon(
                                       Icons.delete_forever,

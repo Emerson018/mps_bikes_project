@@ -13,7 +13,7 @@ class HomeController extends ChangeNotifier {
   List<TransactionModel> _transactions = [];
   List<TransactionModel> get transactions => _transactions;
 
-  // Campos para o balanço
+  // Variáveis do balanço
   double _totalAmount = 0.0;
   double _incomeAmount = 0.0;
   double _outcomeAmount = 0.0;
@@ -21,6 +21,8 @@ class HomeController extends ChangeNotifier {
   double get totalAmount => _totalAmount;
   double get incomeAmount => _incomeAmount;
   double get outcomeAmount => _outcomeAmount;
+
+  bool _isCached = false; // Adiciona cache
 
   void _changeState(HomeState newState) {
     _state = newState;
@@ -42,42 +44,42 @@ class HomeController extends ChangeNotifier {
     }
   }
 
-  Future<void> getAllTransactions() async {
+  Future<void> getAllTransactions({bool forceRefresh = false}) async {
+    if (_isCached && !forceRefresh) {
+      return; // Se já tem cache e não for atualização manual, não faz nada
+    }
+
     _changeState(HomeStateLoading());
     try {
       _transactions = await _transactionRepository.getAllTransactions();
       _calculateBalance();
+      _isCached = true; // Marca que os dados estão no cache
       _changeState(HomeStateSuccess());
     } catch (e) {
       _changeState(HomeStateError());
     }
   }
 
-  // Função para adicionar uma transação e atualizar o balanço
   Future<void> addTransaction(TransactionModel transaction) async {
     _changeState(HomeStateLoading());
     try {
       await _transactionRepository.addTransaction(transaction);
-      // Atualiza a lista local de transações
       _transactions.add(transaction);
       _calculateBalance();
+      _isCached = true; // Mantém o cache atualizado
       _changeState(HomeStateSuccess());
     } catch (e) {
       _changeState(HomeStateError());
     }
   }
+
   Future<void> deleteTransaction(TransactionModel transaction) async {
     _changeState(HomeStateLoading());
     try {
-      // Deleta do Firestore
       await _transactionRepository.deleteTransaction(transaction);
-
-      // Remove localmente
       _transactions.removeWhere((t) => t.id == transaction.id);
-
-      // Recalcula os balanços (caso você precise manter a tela atualizada)
       _calculateBalance();
-
+      _isCached = true; // Mantém o cache atualizado
       _changeState(HomeStateSuccess());
     } catch (e) {
       _changeState(HomeStateError());

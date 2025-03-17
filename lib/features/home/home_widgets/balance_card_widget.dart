@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
 import '../../../common/constants/app_colors.dart';
@@ -15,8 +14,6 @@ class BalanceCard extends StatelessWidget {
   final double outcomeAmount;
   @override
   Widget build(BuildContext context) {
-    double textScaleFactor =
-        MediaQuery.of(context).size.width <= 360 ? 0.8 : 1.0;
     return Positioned(
       left: 24.w,
       right: 24.w,
@@ -45,12 +42,10 @@ class BalanceCard extends StatelessWidget {
         children: [
           Text(
             'Total Balance',
-            textScaleFactor: textScaleFactor,
             style: AppTextStyles.mediumText18.apply(color: AppColors.white),
           ),
           Text(
             '\$${totalAmount.toStringAsFixed(2)}',
-            textScaleFactor: textScaleFactor,
             style: AppTextStyles.mediumText18.apply(color: AppColors.white),
             overflow: TextOverflow.ellipsis, // Evita que o texto estoure a tela
           ),
@@ -94,8 +89,6 @@ class TransactionValueWidget extends StatelessWidget {
   final double amount;
   @override
   Widget build(BuildContext context) {
-    double textScaleFactor =
-        MediaQuery.of(context).size.width <= 360 ? 0.8 : 1.0;
     double iconSize = MediaQuery.of(context).size.width <= 360 ? 16.0 : 24.0;
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -103,7 +96,9 @@ class TransactionValueWidget extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(4.0),
           decoration: BoxDecoration(
-            color: AppColors.white.withOpacity(0.06),
+            color: AppColors.white.withValues(
+              alpha: 210,
+            ),
             borderRadius: const BorderRadius.all(
               Radius.circular(16.0),
             ),
@@ -122,14 +117,12 @@ class TransactionValueWidget extends StatelessWidget {
         children: [
           Text(
             amount.isNegative ? 'Expense' : 'Income',
-            textScaleFactor: textScaleFactor,
             style: AppTextStyles.mediumText18.apply(color: AppColors.white),
           ),
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 100.0.w), // Limitar largura
             child: Text(
                 '\$${amount.toStringAsFixed(2)}',
-                textScaleFactor: textScaleFactor,
                 style: AppTextStyles.smallText.apply(color: AppColors.white),
                 overflow: TextOverflow.ellipsis,
               ),

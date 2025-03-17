@@ -39,14 +39,7 @@ class _HomePageViewState extends State<HomePageView> {
         backgroundColor: AppColors.greenlightOne,
         onPressed: () {
     Navigator.pushNamed(context, NamedRoute.transaction);
-  },/* começo do hard coded */ /*async{
-           final transaction = TransactionModel(
-          description: 'Compra Online',
-          value: 2850.50,
-          date: DateTime.now().millisecondsSinceEpoch,
-        );
-        await locator.get<TransactionRepository>().addTransaction(transaction);
-        }, /* final do hard coded */ */
+  },
         shape: const CircleBorder(),
         child: const Icon(Icons.add),
       ),

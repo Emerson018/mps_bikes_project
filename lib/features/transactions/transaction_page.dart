@@ -80,7 +80,6 @@ class _TransactionPageState extends State<TransactionPage>
         Navigator.pop(context);
       }
       if (_transactionController.state is TransactionStateError) {
-        final error = _transactionController.state as TransactionStateError;
         showCustomSnackBar(
           context: context,
           text: (state as TransactionStateError).message, //tira aqui se bugar
@@ -266,7 +265,6 @@ class _TransactionPageState extends State<TransactionPage>
                           return null;
                         },
                         onTap: () async {
-                          print('object');
                           _date = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
