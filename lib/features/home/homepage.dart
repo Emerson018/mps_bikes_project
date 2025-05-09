@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'Transaction History',
+                        'Histórico de transações',
                         style: AppTextStyles.mediumText18,
                       ),
                       TextButton(

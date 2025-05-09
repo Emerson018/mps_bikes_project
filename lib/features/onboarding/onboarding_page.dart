@@ -22,13 +22,13 @@ class OnboardingPage extends StatelessWidget {
               child: Image.asset('assets/images/man.png'),
             ),
             Text(
-              'Texto aqui',
+              'Registre-se já',
               style: AppTextStyles.mediumText.copyWith(
                 color: AppColors.greenlightTwo,
               ),
             ),
             Text(
-              'Outro aqui',
+              'E tenha acesso a todas as funcionalidades do app',
               style: AppTextStyles.mediumText.copyWith(
                 color: AppColors.greenlightTwo,
               ),
@@ -39,7 +39,7 @@ class OnboardingPage extends StatelessWidget {
                 vertical: 16.0,
               ),
               child: PrimaryButton(
-                text: 'Get Started',
+                text: 'Cadastrar-se',
                 onPressed: () {
                     Navigator.popAndPushNamed(
                     context,

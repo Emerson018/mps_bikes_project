@@ -102,15 +102,15 @@ class _SignUpPageState extends State<SignUpPage> {
                 CustomTextFormField(
                   controller: _nameController,
                   labelText: "Nome",
-                  hintText: "Elon Musk",
+                  hintText: "Johnnie Walker",
 
                   validator: Validator.validateName,
                 ),
 
                 CustomTextFormField(
                   controller: _emailController,
-                  labelText: "your email",
-                  hintText: "john@email.com",
+                  labelText: "Seu email",
+                  hintText: "exemplo@email.com",
                   validator: Validator.validateEmail,
                 ),
 
@@ -161,13 +161,13 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             children: [
               Text(
-                'Already have account? ',
+                'Já possui uma conta? ',
                 style: AppTextStyles.smallText.copyWith(
                   color: AppColors.grey,
                 ),
               ),
               Text(
-                'Sign In ',
+                'Entrar ',
                 style: AppTextStyles.smallText.copyWith(
                   color: AppColors.greenlightTwo,
                 ),

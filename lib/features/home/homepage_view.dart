@@ -48,7 +48,7 @@ class _HomePageViewState extends State<HomePageView> {
         selectedItemColor: AppColors.greenlightOne,
         children: [
           CustomBottomAppBarItem(
-            label: 'home',
+            label: 'Página Inicial',
             primaryIcon: Icons.home,
             secondaryIcon: Icons.home_outlined,
             onPressed: () => pageController.jumpToPage(
@@ -56,7 +56,7 @@ class _HomePageViewState extends State<HomePageView> {
             ),
           ),
           CustomBottomAppBarItem(
-            label: 'stats',
+            label: 'Estatísticas',
             primaryIcon: Icons.analytics,
             secondaryIcon: Icons.analytics_outlined,
             onPressed: () => pageController.jumpToPage(
@@ -65,7 +65,7 @@ class _HomePageViewState extends State<HomePageView> {
           ),
           CustomBottomAppBarItem.empty(),
           CustomBottomAppBarItem(
-            label: 'wallet',
+            label: 'Carteira',
             primaryIcon: Icons.account_balance_wallet,
             secondaryIcon: Icons.account_balance_wallet_outlined,
             onPressed: () => pageController.jumpToPage(
@@ -73,7 +73,7 @@ class _HomePageViewState extends State<HomePageView> {
             ),
           ),
           CustomBottomAppBarItem(
-            label: 'profile',
+            label: 'Perfil',
             primaryIcon: Icons.person,
             secondaryIcon: Icons.person_outline,
             onPressed: () => pageController.jumpToPage(

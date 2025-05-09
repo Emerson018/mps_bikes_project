@@ -54,14 +54,14 @@ class _ProfileChangeNameWidgetState extends State<ProfileChangeNameWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Change Name',
+          'Alterar Nome',
           style: AppTextStyles.mediumText20.apply(color: AppColors.darkGrey),
         ),
         SizedBox(height: 24.h),
         
         /// Campo de texto para inserir o novo nome
         CustomTextFormField(
-          labelText: 'New Name',
+          labelText: 'Novo nome',
           controller: _nameController,
           onChanged: (value) => _updateButtonState(),
         ),
@@ -76,7 +76,7 @@ class _ProfileChangeNameWidgetState extends State<ProfileChangeNameWidget> {
                 backgroundColor: AppColors.greenlightOne,
               ),
               onPressed: widget.profileController.toggleChangeName,
-              child: const Text('Cancel'),
+              child: const Text('Cancelar'),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -84,7 +84,7 @@ class _ProfileChangeNameWidgetState extends State<ProfileChangeNameWidget> {
               ),
               onPressed: isButtonEnabled ? _saveNewName : null ,
               
-              child: const Text('Save'),
+              child: const Text('Salvar'),
             ),
           ],
         ),

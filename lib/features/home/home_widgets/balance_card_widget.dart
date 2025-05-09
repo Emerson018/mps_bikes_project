@@ -41,11 +41,11 @@ class BalanceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Total Balance',
+            'Balanço Total',
             style: AppTextStyles.mediumText18.apply(color: AppColors.white),
           ),
           Text(
-            '\$${totalAmount.toStringAsFixed(2)}',
+            'R\$ ${totalAmount.toStringAsFixed(2)}',
             style: AppTextStyles.mediumText18.apply(color: AppColors.white),
             overflow: TextOverflow.ellipsis, // Evita que o texto estoure a tela
           ),
@@ -116,13 +116,13 @@ class TransactionValueWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            amount.isNegative ? 'Expense' : 'Income',
+            amount.isNegative ? 'Gasto' : 'Rendimento',
             style: AppTextStyles.mediumText18.apply(color: AppColors.white),
           ),
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 100.0.w), // Limitar largura
             child: Text(
-                '\$${amount.toStringAsFixed(2)}',
+                'R\$ ${amount.toStringAsFixed(2)}',
                 style: AppTextStyles.smallText.apply(color: AppColors.white),
                 overflow: TextOverflow.ellipsis,
               ),

@@ -41,6 +41,7 @@ class _WalletPageState extends State<WalletPage> {
       body: Stack(
         children: [
           const AppHeader(),
+          
           Padding(
             padding: const EdgeInsets.only(top: 150.0),
             child: AnimatedBuilder(

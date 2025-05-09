@@ -46,7 +46,7 @@ class _StatsPageState extends State<StatsPage>
     return Scaffold(
       body: Stack(
         children: [
-          const AppHeader(title: 'Statistics'),
+          const AppHeader(),
           Positioned(
             top: 150.h,
             left: 8.w,
@@ -211,7 +211,7 @@ class _StatsPageState extends State<StatsPage>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'Top Transactions',
+                        'Top transações',
                         style: AppTextStyles.mediumText18,
                       ),
                       GestureDetector(

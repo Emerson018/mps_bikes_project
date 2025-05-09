@@ -13,7 +13,7 @@ class CustomTextButtonLogIn extends StatelessWidget {
     return TextButton(
       onPressed: () => Navigator.pushNamed(context, NamedRoute.signIn),
       child: Text(
-        ' Log in',
+        'Entrar',
         style: AppTextStyles.smallText.copyWith(
           color: AppColors.greenlightTwo,
         ),
@@ -32,7 +32,7 @@ class CustomTextButtonSignUp extends StatelessWidget {
     return TextButton(
       onPressed: () => Navigator.pushNamed(context, NamedRoute.signUp),
       child: Text(
-        'SignUp',
+        'Registrar',
         style: AppTextStyles.smallText.copyWith(
           color: AppColors.greenlightTwo,
         ),

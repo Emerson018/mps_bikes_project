@@ -60,14 +60,14 @@ class _ProfilePageState extends State<ProfilePage>
         if (_profileController.showNameUpdateMessage) {
           showCustomSnackBar(
             context: context,
-            text: 'Name updated successfully',
+            text: 'Nome de usuário atualizado com sucesso',
             type: SnackBarType.success,
           );
         }
         if (_profileController.showPasswordUpdateMessage) {
           showCustomSnackBar(
             context: context,
-            text: 'Password updated successfully',
+            text: 'Senha alterada com sucesso',
             type: SnackBarType.success,
           );
         }
@@ -80,9 +80,7 @@ class _ProfilePageState extends State<ProfilePage>
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          const AppHeader(
-            title: 'Perfil',
-          ),
+          const AppHeader(),
           Positioned(
             top: 210.h,
             left: 0,
@@ -166,7 +164,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     label: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        'Change name',
+                                        'Alterar nome',
                                         style: AppTextStyles.mediumText16w500
                                             .apply(color: AppColors.greenlightTwo),
                                         textAlign: TextAlign.start,
@@ -185,7 +183,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     label: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        'Change password',
+                                        'Alterar senha',
                                         style: AppTextStyles.mediumText16w500
                                             .apply(color: AppColors.greenlightTwo),
                                         textAlign: TextAlign.start,
@@ -202,7 +200,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     label: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        'Agreements',
+                                        'Termos de uso',
                                         style: AppTextStyles.mediumText16w500
                                             .apply(color: AppColors.greenlightTwo),
                                         textAlign: TextAlign.start,
@@ -219,7 +217,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     label: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        'Delete account',
+                                        'Deletar conta',
                                         style: AppTextStyles.mediumText16w500
                                             .apply(color: AppColors.greenlightTwo),
                                         textAlign: TextAlign.start,
@@ -241,7 +239,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     label: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        'Logout',
+                                        'Sair do app',
                                         style: AppTextStyles.mediumText16w500
                                             .apply(color: AppColors.greenlightTwo),
                                         textAlign: TextAlign.start,

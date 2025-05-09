@@ -95,8 +95,8 @@ class _SignInPageState extends State<SignInPage> {
 
                 CustomTextFormField(
                   controller: _emailController,
-                  labelText: "your email",
-                  hintText: "john@email.com",
+                  labelText: "Seu email",
+                  hintText: "exemplo@email.com",
                   validator: Validator.validateEmail,
                 ),
 

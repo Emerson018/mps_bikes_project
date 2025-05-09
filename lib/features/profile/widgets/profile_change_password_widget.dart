@@ -77,13 +77,13 @@ class _ProfileChangePasswordWidgetState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Change Password',
+          'Alterar Senha',
           style: AppTextStyles.mediumText20.apply(color: AppColors.darkGrey),
         ),
         const SizedBox(height: 24),
         PasswordFormField(
           controller: _passwordController,
-          labelText: 'New Password',
+          labelText: 'Nova senha',
         ),
         const SizedBox(height: 16),
 
@@ -121,7 +121,7 @@ class _ProfileChangePasswordWidgetState
                 backgroundColor: AppColors.greenlightOne,
               ),
               onPressed: widget.profileController.onChangePasswordTapped,
-              child: const Text('Cancel'),
+              child: const Text('Cancelar'),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -130,7 +130,7 @@ class _ProfileChangePasswordWidgetState
                     : Colors.grey,
               ),
               onPressed: isButtonEnabled ? _saveNewPassword : null,
-              child: const Text('Save'),
+              child: const Text('Salvar'),
             ),
           ],
         ),
