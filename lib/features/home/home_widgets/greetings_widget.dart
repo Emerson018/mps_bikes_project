@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mps_app/common/constants/app_colors.dart';
 import 'package:mps_app/common/constants/app_text_style.dart';
-import 'package:mps_app/features/profile/profile_controller.dart';
-import 'package:provider/provider.dart';
-
-import '../../../locator.dart';
 
 class GreetingsWidget extends StatelessWidget {
   const GreetingsWidget({
@@ -16,9 +12,6 @@ class GreetingsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final profileController = locator.get<ProfileController>();
-    final userName = profileController.userData.name ?? 'sem nome';
-
     double _textScaleFactor =
       MediaQuery.of(context).size.width < 360 ? 0.7 : 1.0;
     return Column(
@@ -31,7 +24,7 @@ class GreetingsWidget extends StatelessWidget {
               .apply(color: AppColors.white),
         ),
         Text(
-          userName,
+          'Usuário',
           textScaleFactor: _textScaleFactor,
           style: AppTextStyles.mediumText18
               .apply(color: AppColors.white),
