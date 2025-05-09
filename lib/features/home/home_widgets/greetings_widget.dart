@@ -18,13 +18,13 @@ class GreetingsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Good afternoon,',
+          'Seja bem vindo,',
           textScaleFactor: _textScaleFactor,
           style: AppTextStyles.smallText
               .apply(color: AppColors.white),
         ),
         Text(
-          'Enjelin Morgeana',
+          'Usuário',
           textScaleFactor: _textScaleFactor,
           style: AppTextStyles.mediumText18
               .apply(color: AppColors.white),

@@ -16,39 +16,47 @@ final locator = GetIt.instance;
 
 void setupDependences() {
   locator.registerLazySingleton<AuthService>(
-    () => FirebaseAuthService());
+    () => FirebaseAuthService(),
+  );
 
   locator.registerFactory<SplashController>(
-    () => SplashController(const Securestorage()));
+    () => SplashController(const Securestorage()),
+  );
 
   locator.registerFactory<SignInController>(
-    () => SignInController(locator.get<AuthService>()));
+    () => SignInController(locator.get<AuthService>()),
+  );
 
   locator.registerFactory<SignUpController>(
-    ()=> SignUpController(locator.get<AuthService>(), 
-    const Securestorage()));
+    () => SignUpController(locator.get<AuthService>(), const Securestorage()),
+  );
 
   locator.registerLazySingleton<TransactionRepository>(
-    () => TransactionRepositoryImpl());
+    () => TransactionRepositoryImpl(),
+  );
 
   locator.registerLazySingleton<HomeController>(
-    () => HomeController(locator.get<TransactionRepository>()));
+    () => HomeController(locator.get<TransactionRepository>()),
+  );
 
-//o git hub excluiu essa parte, nao sei porque
-    locator.registerFactory<TransactionController>(
+  // O GitHub excluiu essa parte, não sei o motivo
+  locator.registerFactory<TransactionController>(
     () => TransactionController(
       repository: locator.get<TransactionRepository>(),
       storage: const Securestorage(),
     ),
   );
-  
-  locator.registerLazySingleton(
-    () => WalletController(transactionRepository: locator.get<TransactionRepository>()),
+
+  locator.registerFactory<ProfileController>(
+    () => ProfileController(userDataService: locator.get<TransactionRepository>()),
   );
 
-   locator.registerFactory<ProfileController>(
-      () => ProfileController(userDataService: locator.get<TransactionRepository>()));
+  locator.registerLazySingleton<StatsController>(
+    () => StatsController(transactionRepository: locator.get<TransactionRepository>()),
+  );
 
-  locator.registerLazySingleton<StatsController>(() => StatsController(
-      transactionRepository: locator.get<TransactionRepository>()));
+  // Registro do WalletController
+  locator.registerLazySingleton<WalletController>(
+    () => WalletController(),
+  );
 }

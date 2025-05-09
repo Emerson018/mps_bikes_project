@@ -43,4 +43,6 @@ void main() async {
 
 //video 41 começa em 2:50
 
-//PULEI O VIDEO 45  
+//PULEI O VIDEO 45
+
+//alphaVantage API: IGUI0B88EYLF3QKP
